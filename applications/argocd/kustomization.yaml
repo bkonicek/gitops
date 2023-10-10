@@ -5,4 +5,4 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.4/manifests/install.yaml
-  - argocd.yaml
+  # - argocd.yaml

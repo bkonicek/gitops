@@ -9,11 +9,9 @@ spec:
     namespace: argocd
     server: https://kubernetes.default.svc
   source:
-    chart: argo-cd
-    repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 5.46.7
-    helm:
-      releaseName: argocd
+    repoURL: https://github.com/bkonicek/gitops
+    targetRevision: HEAD
+    path: applications/argocd
   syncPolicy:
     # automated:
     #   prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

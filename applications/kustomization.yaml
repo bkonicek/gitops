@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
   - argocd
-  - ingress-nginx
+  - ingress-nginx/application.yaml

@@ -17,6 +17,7 @@ spec:
       valuesObject:
         configs:
           cmp:
+            create: true
             kustomized-helm:
               init:
                 command: ["/bin/sh", "-c"]

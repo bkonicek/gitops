@@ -15,17 +15,18 @@ spec:
     helm:
       releaseName: argocd
       valuesObject:
-        cmp:
-          kustomized-helm:
-            init:
-              command: ["/bin/sh", "-c"]
-              args: ["helm dependency build"]
-            generate:
-              command: [sh, -c]
-              args:
-                [
-                  "helm template --release-name release-name . > all.yaml && kustomize build",
-                ]
+        configs:
+          cmp:
+            kustomized-helm:
+              init:
+                command: ["/bin/sh", "-c"]
+                args: ["helm dependency build"]
+              generate:
+                command: [sh, -c]
+                args:
+                  [
+                    "helm template --release-name release-name . > all.yaml && kustomize build",
+                  ]
   syncPolicy:
     # automated:
     #   prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

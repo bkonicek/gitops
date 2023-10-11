@@ -12,12 +12,12 @@ spec:
   project: default
   source:
     chart: metrics-server
+    repoURL: https://kubernetes-sigs.github.io/metrics-server/
+    targetRevision: 3.11.0
     helm:
       values: |
         args:
           - '--kubelet-insecure-tls'
-      repoURL: https://kubernetes-sigs.github.io/metrics-server/
-      targetRevision: 3.11.0
   syncPolicy:
     automated:
       prune: true

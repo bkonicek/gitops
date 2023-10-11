@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/bkonicek/gitops
     targetRevision: HEAD
-    path: applications/argocd
+    path: core/argocd
   syncPolicy:
     # automated:
     #   prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

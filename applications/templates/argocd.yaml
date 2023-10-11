@@ -3,14 +3,15 @@ kind: Application
 metadata:
   name: argocd
   namespace: argocd
-spec:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.iospec:
   project: default
   destination:
     namespace: argocd
-    server: https://kubernetes.default.svc
+    server: {{ .Values.spec.destination.server }}
   source:
-    repoURL: https://github.com/bkonicek/gitops
-    targetRevision: HEAD
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
     path: core/argocd
   syncPolicy:
     # automated:

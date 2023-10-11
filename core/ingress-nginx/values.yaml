@@ -1,1 +1,5 @@
 ingress-nginx:
+  controller:
+    service:
+      annotations:
+        oci.oraclecloud.com/load-balancer-type: "nlb"

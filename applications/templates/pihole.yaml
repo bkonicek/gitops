@@ -15,7 +15,7 @@ spec:
     repoURL: https://mojo2600.github.io/pihole-kubernetes/
     targetRevision: 2.18.0
     helm:
-      values:
+      values: |
         DNS1: 10.96.5.5
   syncPolicy:
     automated:

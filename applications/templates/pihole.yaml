@@ -17,6 +17,9 @@ spec:
     helm:
       values: |
         DNS1: 10.96.5.5
+        serviceDns:
+          mixedService: true
+          type: ClusterIP
   syncPolicy:
     automated:
       prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

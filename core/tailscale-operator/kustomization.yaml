@@ -4,8 +4,17 @@ kind: Kustomization
 namespace: tailscale
 
 resources:
-- https://raw.githubusercontent.com/tailscale/tailscale/main/cmd/k8s-operator/manifests/operator.yaml
-- operator-oauth-sealed-secret.yaml
+  - https://raw.githubusercontent.com/tailscale/tailscale/main/cmd/k8s-operator/manifests/operator.yaml
+  - operator-oauth-sealed-secret.yaml
 
 patches:
-- path: remove-secret.yaml
+  - path: remove-secret.yaml
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
+        value:
+          name: APISERVER_PROXY
+          value: "true"
+    target:
+      kind: Deployment
+      name: operator

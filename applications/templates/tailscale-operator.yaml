@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   destination:
-    namespace: tailscale-operator
+    namespace: tailscale
     server: {{ .Values.spec.destination.server }}
   source:
     repoURL: {{ .Values.spec.source.repoURL }}

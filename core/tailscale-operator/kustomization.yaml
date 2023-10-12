@@ -9,12 +9,20 @@ resources:
 
 patches:
   - path: remove-secret.yaml
-  # - patch: |-
-  #     - op: add
-  #       path: "/spec/template/spec/containers/0/env/-"
-  #       value:
-  #         name: APISERVER_PROXY
-  #         value: "true"
-  #   target:
-  #     kind: Deployment
-  #     name: operator
+  - patch: |-
+      - op: remove
+        path: "/spec/template/spec/containers/0/env/8"
+        value:
+          name: APISERVER_PROXY
+    target:
+      kind: Deployment
+      name: operator
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
+        value:
+          name: APISERVER_PROXY
+          value: "true"
+    target:
+      kind: Deployment
+      name: operator

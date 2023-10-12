@@ -12,3 +12,9 @@ configMapGenerator:
     name: argocd-cm
     literals:
       - kustomize.buildOptions=--enable-helm
+
+patches:
+  - path: tailscale-service.yaml
+    target:
+      kind: Service
+      name: argocd-server

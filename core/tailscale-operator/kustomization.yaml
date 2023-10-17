@@ -26,3 +26,12 @@ patches:
     target:
       kind: Deployment
       name: operator
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/env/6"
+        value:
+          name: PROXY_IMAGE
+          value: "bkonicek/tailscale:unstable"
+    target:
+      kind: Deployment
+      name: operator

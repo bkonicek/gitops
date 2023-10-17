@@ -20,6 +20,8 @@ spec:
         serviceDns:
           mixedService: true
           type: ClusterIP
+          annotations:
+            tailscale.com/expose: "true"
   syncPolicy:
     automated:
       prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

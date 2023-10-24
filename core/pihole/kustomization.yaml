@@ -10,5 +10,10 @@ helmCharts:
     repo: https://mojo2600.github.io/pihole-kubernetes/
     valuesFile: values.yaml
 
-patches:
-  - path: load-balancer-class.yaml
+secretGenerator:
+  - name: pihole-admin
+    files:
+      - password
+
+generatorOptions:
+  disableNameSuffixHash: true

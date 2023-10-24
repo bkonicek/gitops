@@ -11,17 +11,23 @@ spec:
     namespace: pihole
     server: {{ .Values.spec.destination.server }}
   source:
-    chart: pihole
-    repoURL: https://mojo2600.github.io/pihole-kubernetes/
-    targetRevision: 2.18.0
-    helm:
-      values: |
-        DNS1: 10.96.5.5
-        serviceDns:
-          mixedService: true
-          type: ClusterIP
-          annotations:
-            tailscale.com/expose: "true"
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    path: core/pihole
+
+    # chart: pihole
+    # repoURL: https://mojo2600.github.io/pihole-kubernetes/
+    # targetRevision: 2.18.0
+    # helm:
+    #   values: |
+    #     DNS1: 10.96.5.5
+    #     serviceDns:
+    #       mixedService: true
+    #       type: ClusterIP
+    #       annotations:
+    #         tailscale.com/expose: "true"
+
+      ### TODO - try changing to LoadBalancer with loadBalancerClass: tailscale and externalTrafficPolicy: Local for client IPs in Pihole
   syncPolicy:
     automated:
       prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

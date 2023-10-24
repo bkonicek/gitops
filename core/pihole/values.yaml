@@ -1,0 +1,4 @@
+DNS1: 10.96.5.5
+serviceDns:
+  mixedService: true
+  type: LoadBalancer

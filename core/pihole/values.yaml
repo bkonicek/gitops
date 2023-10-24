@@ -6,3 +6,4 @@ serviceDns:
     tailscale.com/expose: "true"
 admin:
   existingSecret: pihole-admin
+replicaCount: 2

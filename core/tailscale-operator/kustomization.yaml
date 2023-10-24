@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: tailscale
 
 resources:
-  - https://raw.githubusercontent.com/tailscale/tailscale/f92e6a1be80389fada7a1d2eeb92f216413c6e7a/cmd/k8s-operator/manifests/operator.yaml
+  - https://raw.githubusercontent.com/tailscale/tailscale/f92e6a1be80389fada7a1d2eeb92f216413c6e7a/cmd/k8s-operator/manifests/operator.yaml # 8/28/2023
   - operator-oauth-sealed-secret.yaml
 
 patches:

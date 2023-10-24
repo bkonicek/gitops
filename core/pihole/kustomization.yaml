@@ -10,10 +10,5 @@ helmCharts:
     repo: https://mojo2600.github.io/pihole-kubernetes/
     valuesFile: values.yaml
 
-secretGenerator:
-  - name: pihole-admin
-    files:
-      - password
-
-generatorOptions:
-  disableNameSuffixHash: true
+resources:
+  - pihole-admin-sealed-secret.yaml

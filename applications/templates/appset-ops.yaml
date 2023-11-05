@@ -8,7 +8,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoUrl: {{ .Values.spec.source.repoURL }}
+        repoURL: {{ .Values.spec.source.repoURL }}
         revision: {{ .Values.spec.source.targetRevision }}
         directories:
           - path: ops/*

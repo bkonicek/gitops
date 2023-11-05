@@ -4,6 +4,8 @@ metadata:
   name: ops
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         repoUrl: {{ .Values.spec.source.repoURL }}

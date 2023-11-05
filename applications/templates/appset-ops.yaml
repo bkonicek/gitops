@@ -14,16 +14,16 @@ spec:
           - path: ops/*
   template:
     metadata:
-      name: '{{.path.basename}}'
+      name: '{{ "{{" }}.path.basename{{ "}}" }}'
     spec:
       project: default
       destination:
-        namespace: '{{.path.basename}}'
+        namespace: '{{ "{{" }}.path.basename{{ "}}" }}'
         server: {{ .Values.spec.destination.server }}
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
-        path: '{{.path.path}}'
+        path: '{{ "{{" }}.path.path{{ "}}" }}'
       syncPolicy:
         automated:
           prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).

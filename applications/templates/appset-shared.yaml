@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ops
+  name: shared
   namespace: argocd
 spec:
   goTemplate: true
@@ -11,7 +11,7 @@ spec:
         repoURL: {{ .Values.spec.source.repoURL }}
         revision: {{ .Values.spec.source.targetRevision }}
         directories:
-          - path: ops/*
+          - path: shared/*
   template:
     metadata:
       name: '{{ "{{" }}.path.basename{{ "}}" }}'

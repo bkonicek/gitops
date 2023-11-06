@@ -6,8 +6,8 @@ namespace: tailscale
 resources:
   - https://raw.githubusercontent.com/tailscale/tailscale/ed1b935238a7c6cce3aa4865aa13181eb679361a/cmd/k8s-operator/deploy/manifests/operator.yaml # 10/30/2023
   - operator-oauth-sealed-secret.yaml
-# patches:
-#   - path: remove-secret.yaml
+patches:
+  - path: remove-secret.yaml
 #   - patch: |-
 #       - op: remove
 #         path: "/spec/template/spec/containers/0/env/8"

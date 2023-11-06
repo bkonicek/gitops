@@ -1,0 +1,11 @@
+ingress-nginx:
+  controller:
+    replicaCount: 2
+    service:
+      externalTrafficPolicy: Local
+      annotations:
+        oci.oraclecloud.com/load-balancer-type: "nlb"
+    config:
+      strict-validate-path-type: true
+    extraArgs:
+      enable-annotation-validation: true

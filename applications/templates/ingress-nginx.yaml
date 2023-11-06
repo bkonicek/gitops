@@ -3,8 +3,8 @@ kind: Application
 metadata:
   name: ingress-nginx
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  # finalizers:
+  # - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   destination:
@@ -21,4 +21,4 @@ spec:
     #   allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
     syncOptions:
       - CreateNamespace=true
-  
+    preserveResourcesOnDeletion: true

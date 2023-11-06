@@ -2,8 +2,8 @@ DNS1: 10.96.5.5
 serviceDns:
   mixedService: true
   type: ClusterIP
-  # annotations:
-  #   tailscale.com/expose: "true"
+  annotations:
+    tailscale.com/expose: "true"
 admin:
   existingSecret: pihole-admin
 replicaCount: 2

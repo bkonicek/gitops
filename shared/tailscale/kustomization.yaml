@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tailscale
+
+helmCharts:
+  - name: tailscale-operator
+    releaseName: tailscale-operator
+    repo: https://github.com/tailscale/tailscale/tree/main/cmd/k8s-operator/deploy/chart
+    valuesInline:
+      oauth:
+        clientSecret: operator-oauth
+      proxyConfig:
+        firewallMode: nftables # required for OKE
+
+resources:
+  - operator-oauth-sealed-secret.yaml

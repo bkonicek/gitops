@@ -4,10 +4,14 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-  - manifests/argocd-cm.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.4/manifests/install.yaml
   # - argocd.yaml
 
+configMapGenerator:
+  - behavior: merge
+    name: argocd-cm
+    literals:
+      - kustomize.buildOptions=--enable-helm
 patches:
   - path: tailscale-service.yaml
     target:

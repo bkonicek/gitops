@@ -4,34 +4,33 @@ kind: Kustomization
 namespace: tailscale
 
 resources:
-  - https://raw.githubusercontent.com/tailscale/tailscale/f92e6a1be80389fada7a1d2eeb92f216413c6e7a/cmd/k8s-operator/manifests/operator.yaml # 8/28/2023
+  - https://raw.githubusercontent.com/tailscale/tailscale/ed1b935238a7c6cce3aa4865aa13181eb679361a/cmd/k8s-operator/deploy/manifests/operator.yaml # 10/30/2023
   - operator-oauth-sealed-secret.yaml
-
-patches:
-  - path: remove-secret.yaml
-  - patch: |-
-      - op: remove
-        path: "/spec/template/spec/containers/0/env/8"
-        value:
-          name: APISERVER_PROXY
-    target:
-      kind: Deployment
-      name: operator
-  - patch: |-
-      - op: add
-        path: "/spec/template/spec/containers/0/env/-"
-        value:
-          name: APISERVER_PROXY
-          value: "true"
-    target:
-      kind: Deployment
-      name: operator
-  - patch: |-
-      - op: replace
-        path: "/spec/template/spec/containers/0/env/6"
-        value:
-          name: PROXY_IMAGE
-          value: "bkonicek/tailscale:unstable"
-    target:
-      kind: Deployment
-      name: operator
+# patches:
+#   - path: remove-secret.yaml
+#   - patch: |-
+#       - op: remove
+#         path: "/spec/template/spec/containers/0/env/8"
+#         value:
+#           name: APISERVER_PROXY
+#     target:
+#       kind: Deployment
+#       name: operator
+#   - patch: |-
+#       - op: add
+#         path: "/spec/template/spec/containers/0/env/-"
+#         value:
+#           name: APISERVER_PROXY
+#           value: "true"
+#     target:
+#       kind: Deployment
+#       name: operator
+#   - patch: |-
+#       - op: replace
+#         path: "/spec/template/spec/containers/0/env/6"
+#         value:
+#           name: PROXY_IMAGE
+#           value: "bkonicek/tailscale:unstable"
+#     target:
+#       kind: Deployment
+#       name: operator

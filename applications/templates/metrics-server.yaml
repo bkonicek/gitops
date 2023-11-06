@@ -18,8 +18,6 @@ spec:
       values: |
         args:
           - '--kubelet-insecure-tls'
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    preserveResourcesOnDeletion: true
+  # syncPolicy:
+  #   automated:
+  #     selfHeal: true

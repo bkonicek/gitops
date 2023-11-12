@@ -6,6 +6,7 @@ namespace: argocd
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.6/manifests/install.yaml
   - manifests/dex-okta-ca-cert-sealed-secret.yaml
+  - manifests/dex-ingress.yaml
   # - argocd.yaml
 
 patches:

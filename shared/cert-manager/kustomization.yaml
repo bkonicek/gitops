@@ -5,7 +5,7 @@ namespace: cert-manager
 
 resources:
   - https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.crds.yaml
-  # - clusterissuer-http-staging.yaml
+  - clusterissuer-http-staging.yaml
 
 helmCharts:
   - name: cert-manager

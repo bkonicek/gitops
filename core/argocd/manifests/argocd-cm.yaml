@@ -18,7 +18,7 @@ data:
         name: Okta
         config:
           ssoURL: https://dev-02634852.okta.com/app/dev-02634852_argocd_1/exkd8luqztbtbK1Q25d7/sso/saml
-          ca: /var/dex/okta.crt
+          ca: /var/dex/okta/okta.crt
           redirectURI: https://argocd.benkonicek.com/api/dex/callback
           usernameAttr: email
           emailAttr: email

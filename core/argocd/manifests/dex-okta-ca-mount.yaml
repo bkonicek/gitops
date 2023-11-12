@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-dex-server
+  template:
+    spec:
+      volumes:
+        - name: okta-cert
+          secret:
+            secretName: dex-okta-ca-cert
+      containers:
+        - name: dex
+          volumeMounts:
+            - name: okta-cert
+              mountPath: /var/dex/okta
+              readOnly: true

@@ -5,6 +5,7 @@ namespace: argocd
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.6/manifests/install.yaml
+  - manifests/dex-okta-ca-cert-sealed-secret.yaml
   # - argocd.yaml
 
 patches:
@@ -19,4 +20,5 @@ patches:
     target:
       kind: Deployment
       name: argocd-server
+  - path: manifests/dex-okta-ca-mount.yaml
   - path: manifests/argocd-cm.yaml

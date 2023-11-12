@@ -7,3 +7,19 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   kustomize.buildOptions: --enable-helm
+  url: http://argo
+  dex.config: |
+    logger:
+      level: debug
+      format: json
+    connectors:
+      - type: saml
+        id: okta
+        name: Okta
+        config:
+          ssoURL: https://dev-02634852.okta.com/app/dev-02634852_argocd_1/exkd8luqztbtbK1Q25d7/sso/saml
+          ca: /var/dex/okta.crt
+          redirectURI: http://argocd/api/dex/callback
+          usernameAttr: email
+          emailAttr: email
+          groupsAttr: group

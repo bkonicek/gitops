@@ -9,6 +9,5 @@ helmCharts:
     version: 1.13.2
     repo: https://charts.jetstack.io
     valuesFile: values.yaml
-
-resources:
-  - clusterissuer-http-staging.yaml
+# resources:
+#   - clusterissuer-http-staging.yaml

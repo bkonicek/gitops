@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-external-callback-http
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  rules:
+    - host: argocd.benkonicek.com
+      http:
+        paths:
+          - path: /api/dex/callback
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - argocd.benkonicek.com
+      secretName: argocd-dex-cert

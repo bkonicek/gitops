@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: cert-manager
 
 resources:
-  - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.crds.yaml
+  - https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.crds.yaml
   # - clusterissuer-http-staging.yaml
 
 helmCharts:

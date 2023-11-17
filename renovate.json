@@ -19,5 +19,12 @@
       "matchStrings": ["https:\/\/raw.githubusercontent.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"],
       "datasourceTemplate": "github-tags",
     }
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["tailscale"],
+      "matchManagers": ["regex"],
+      "enabled": false
+    }
   ]
 }

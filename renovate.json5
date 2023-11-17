@@ -25,6 +25,13 @@
       "matchPackagePatterns": ["tailscale"],
       "matchManagers": ["regex"],
       "enabled": false
-    }
-  ]
+    },
+    {
+      "groupName": "helm and crds",
+      "groupSlug": "helmCRDs",
+      "matchPackagePatterns": [
+        "cert-manager",
+      ],
+    },
+  ],
 }

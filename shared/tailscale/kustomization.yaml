@@ -8,6 +8,7 @@ resources:
   - operator-oauth-sealed-secret.yaml
 patches:
   - path: remove-secret.yaml
+  - path: imagepull-always.yaml
 #   - patch: |-
 #       - op: remove
 #         path: "/spec/template/spec/containers/0/env/8"

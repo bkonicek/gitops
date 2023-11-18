@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: operator
+  namespace: tailscale
+spec:
+  template:
+    spec:
+      containers:
+        - name: operator
+          imagePullPolicy: Always # always pull until operator uses tagged releases

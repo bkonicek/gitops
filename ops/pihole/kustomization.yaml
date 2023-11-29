@@ -10,5 +10,5 @@ helmCharts:
     repo: https://mojo2600.github.io/pihole-kubernetes/
     valuesFile: values.yaml
 
-resources:
-  - pihole-admin-sealed-secret.yaml
+patches:
+  - path: patches/1password-secret-annotation.yaml

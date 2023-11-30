@@ -12,3 +12,6 @@ helmCharts:
 
 patches:
   - path: patches/1password-secret-annotation.yaml
+
+resources:
+  - pdb.yaml

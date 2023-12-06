@@ -13,7 +13,7 @@ spec:
         repoURL: {{ .Values.spec.source.repoURL }}
         revision: {{ .Values.spec.source.targetRevision }}
         directories:
-          - path: custom/**
+          - path: custom/*
   template:
     metadata:
       name: '{{`{{.path[1]}}`}}'

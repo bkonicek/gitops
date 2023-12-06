@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-http
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - whoami.benkonicek.com
+      secretName: whoami-cert
+  rules:
+    - host: whoami.benkonicek.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami-deployment
+                port:
+                  number: 80

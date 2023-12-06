@@ -1,0 +1,35 @@
+# AppSet for custom apps that don't necessarily follow the pattern of the others.
+# Path structure is custom/<namespace>/<app config>
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: custom
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: {{ .Values.spec.source.repoURL }}
+        revision: {{ .Values.spec.source.targetRevision }}
+        directories:
+          - path: custom/**
+  template:
+    metadata:
+      name: '{{ "{{" }}.path[1]{{ "}}" }}'
+    spec:
+      project: default
+      destination:
+        namespace: '{{ "{{" }}.path[0]{{ "}}" }}'
+        server: {{ .Values.spec.destination.server }}
+      source:
+        repoURL: {{ .Values.spec.source.repoURL }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        path: '{{ "{{" }}.path.path{{ "}}" }}'
+      syncPolicy:
+        automated:
+          prune: false # Specifies if resources should be pruned during auto-syncing ( false by default ).
+          selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+          allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+        syncOptions:
+          - CreateNamespace=true

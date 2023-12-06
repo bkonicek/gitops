@@ -16,11 +16,11 @@ spec:
           - path: custom/*/*
   template:
     metadata:
-      name: '{{`{{index .path.segments 1}}`}}'
+      name: '{{`{{index .path.segments 2}}`}}'
     spec:
       project: default
       destination:
-        namespace: '{{`{{index .path.segments 0}}`}}'
+        namespace: '{{`{{index .path.segments 1}}`}}'
         server: {{ .Values.spec.destination.server }}
       source:
         repoURL: {{ .Values.spec.source.repoURL }}

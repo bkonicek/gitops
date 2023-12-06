@@ -16,7 +16,7 @@ spec:
           - path: custom/**
   template:
     metadata:
-      name: '{{`{{.path.basename}}`}}'
+      name: '{{`{{index .path.segments 1}}`}}'
     spec:
       project: default
       destination:

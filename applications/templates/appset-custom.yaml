@@ -20,7 +20,7 @@ spec:
     spec:
       project: default
       destination:
-        namespace: '{{`{{.path.path[0]}}`}}'
+        namespace: '{{`{{.path.[0]}}`}}'
         server: {{ .Values.spec.destination.server }}
       source:
         repoURL: {{ .Values.spec.source.repoURL }}

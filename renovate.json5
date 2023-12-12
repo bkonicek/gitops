@@ -29,8 +29,8 @@
     {
       "groupName": "helm and crds",
       "groupSlug": "helmCRDs",
-      "matchPackagePatterns": [
-        "cert-manager",
+      "matchFileNames": [
+        "**/cert-manager/kustomization.yaml",
       ],
     },
   ],

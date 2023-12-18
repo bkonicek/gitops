@@ -7,6 +7,3 @@ serviceDns:
 admin:
   existingSecret: pihole-admin
 replicaCount: 2
-image:
-  repository: pihole/pihole
-  tag: "2023.11.0"

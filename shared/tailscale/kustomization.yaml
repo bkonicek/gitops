@@ -4,34 +4,12 @@ kind: Kustomization
 namespace: tailscale
 
 resources:
-  - https://raw.githubusercontent.com/tailscale/tailscale/bd534b971a797c1fd7a876262d2a77de7b97db05/cmd/k8s-operator/deploy/manifests/operator.yaml # 11/16/2023
+  - https://raw.githubusercontent.com/tailscale/tailscale/1a08ea5990c30caef5ad2c207c7e9ff2a94e8859/cmd/k8s-operator/deploy/crds/tailscale.com_connectors.yaml # 1.56.1 (no release with CRDs yet)
   - operator-oauth-sealed-secret.yaml
-patches:
-  - path: remove-secret.yaml
-  - path: imagepull-always.yaml
-#   - patch: |-
-#       - op: remove
-#         path: "/spec/template/spec/containers/0/env/8"
-#         value:
-#           name: APISERVER_PROXY
-#     target:
-#       kind: Deployment
-#       name: operator
-#   - patch: |-
-#       - op: add
-#         path: "/spec/template/spec/containers/0/env/-"
-#         value:
-#           name: APISERVER_PROXY
-#           value: "true"
-#     target:
-#       kind: Deployment
-#       name: operator
-#   - patch: |-
-#       - op: replace
-#         path: "/spec/template/spec/containers/0/env/6"
-#         value:
-#           name: PROXY_IMAGE
-#           value: "bkonicek/tailscale:unstable"
-#     target:
-#       kind: Deployment
-#       name: operator
+
+helmCharts:
+  - name: tailscale-operator
+    includeCRDs: false
+    releaseName: tailscale-operator
+    version: 1.56.1
+    repo: https://pkgs.tailscale.com/helmcharts

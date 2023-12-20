@@ -20,3 +20,8 @@ cluster-autoscaler:
     OCI_SDK_APPEND_USER_AGENT: "oci-oke-cluster-autoscaler"
 
   replicaCount: 2
+
+  autoscalingGroups:
+    - name: ocid1.nodepool.oc1.iad.aaaaaaaap2gxdttgxisgag36xupwwnga7vsj43ub6kdcuop3nnq4lyxlh2wa
+      minSize: 1
+      maxSize: 3

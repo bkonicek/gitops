@@ -7,3 +7,5 @@ serviceDns:
 admin:
   existingSecret: pihole-admin
 replicaCount: 2
+podAnnotations:
+  "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"

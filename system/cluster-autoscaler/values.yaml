@@ -18,3 +18,5 @@ cluster-autoscaler:
   extraEnv:
     OKE_USE_INSTANCE_PRINCIPAL: true
     OCI_SDK_APPEND_USER_AGENT: "oci-oke-cluster-autoscaler"
+
+  replicaCount: 2

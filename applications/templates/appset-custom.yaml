@@ -16,7 +16,7 @@ spec:
           - path: environments/*/*/config.yaml
   template:
     metadata:
-      name: '{{`{{ index .path.segments 1 }}`-`{{ .path.basenameNormalized }}`}}'
+      name: '{{`{{ index .path.segments 1 }}-{{ .path.basenameNormalized }}`}}'
       labels:
         app_name: '{{ .path.basenameNormalized }}'
     spec:

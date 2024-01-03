@@ -5,3 +5,5 @@ metrics-server:
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
+
+  fullnameOverride: metrics-server

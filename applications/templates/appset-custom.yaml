@@ -3,29 +3,31 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: custom
+  name: argocd-applications
   namespace: argocd
 spec:
   goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
+  # goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
         repoURL: {{ .Values.spec.source.repoURL }}
         revision: {{ .Values.spec.source.targetRevision }}
-        directories:
-          - path: custom/*/*
+        files:
+          - path: environments/*/*/config.yaml
   template:
     metadata:
-      name: '{{`{{index .path.segments 2}}`}}'
+      name: '{{`{{ index .path.segments 1 }}`-`{{ .path.basenameNormalized }}`}}'
+      labels:
+        app_name: '{{ .path.basenameNormalized }}'
     spec:
       project: default
       destination:
-        namespace: '{{`{{index .path.segments 1}}`}}'
+        namespace: '{{`{{ .namespace }}`}}'
         server: {{ .Values.spec.destination.server }}
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        targetRevision: {{ .Values.spec.source.targetRevision }}
-        path: '{{`{{.path.path}}`}}'
+        targetRevision: '{{`{{ .targetRevision }}`}}'
+        path: '{{`{{ .path.path }}`}}'
       syncPolicy:
         automated:
           prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

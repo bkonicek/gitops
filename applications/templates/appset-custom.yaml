@@ -18,7 +18,7 @@ spec:
     metadata:
       name: '{{`{{index .path.segments 1}}`}}-{{`{{.path.basenameNormalized}}`}}'
       labels:
-        app_name: '{{`.path.basenameNormalized`}}'
+        app_name: '{{`{{.path.basenameNormalized}}`}}'
     spec:
       project: default
       destination:

@@ -25,3 +25,5 @@ cluster-autoscaler:
     - name: ocid1.nodepool.oc1.iad.aaaaaaaap2gxdttgxisgag36xupwwnga7vsj43ub6kdcuop3nnq4lyxlh2wa
       minSize: 1
       maxSize: 3
+
+  fullnameOverride: cluster-autoscaler

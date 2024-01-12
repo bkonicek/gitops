@@ -1,0 +1,2 @@
+namespace: external-dns
+targetRevision: HEAD

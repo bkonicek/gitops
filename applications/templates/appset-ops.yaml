@@ -31,3 +31,5 @@ spec:
           allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
         syncOptions:
           - CreateNamespace=true
+  syncPolicy:
+    preserveResourcesOnDeletion: true

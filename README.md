@@ -2,8 +2,10 @@
 
 Repository storing ArgoCD configurations for my personal K8s cluster running in OKE
 
-## Bootstrapping
+## Infrastructure
+Infrastructure as Code via Terraform is maintained in [bkonicek/terraform](https://github.com/bkonicek/terraform)
 
+## Bootstrapping
 1. Assuming you have a running cluster, install the latest ArgoCD [release](https://github.com/argoproj/argo-cd/releases)
 
     ```

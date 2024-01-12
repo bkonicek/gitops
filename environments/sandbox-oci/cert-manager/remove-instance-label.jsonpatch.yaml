@@ -13,13 +13,6 @@
 #
 #  https://www.linkedin.com/in/HariSekhon
 #
-
-# Removes label app.kubernetes.io/instance which can cause warnings in ArgoCD, eg:
-#
-#  SharedResourceWarning 	CustomResourceDefinition/certificaterequests.cert-manager.io is part of applications cert-manager-production and cert-manager
-#
-#   https://github.com/argoproj/argo-cd/issues/6728
-
 ---
 - op: remove
   path: /metadata/labels/app.kubernetes.io~1instance

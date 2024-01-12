@@ -10,3 +10,5 @@ doh:
 replicaCount: 2
 podAnnotations:
   "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+podDisruptionBudget:
+  enabled: true

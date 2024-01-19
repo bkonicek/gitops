@@ -1,0 +1,2 @@
+namespace: tailscale
+targetRevision: HEAD

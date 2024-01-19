@@ -14,3 +14,11 @@ helmCharts:
     releaseName: tailscale-operator
     version: 1.56.1
     repo: https://pkgs.tailscale.com/helmcharts
+    valuesInline:
+      operatorConfig:
+        resources:
+          requests:
+            cpu: 500m
+            memory: 100Mi
+          limits:
+            memory: 100Mi

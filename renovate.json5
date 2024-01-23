@@ -25,6 +25,7 @@
       "groupName": "{{parentDir}}",
       "matchPackagePatterns": [
         "cert-manager",
+        "tailscale",
       ],
     },
   ],

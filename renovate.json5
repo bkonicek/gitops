@@ -22,11 +22,6 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["tailscale"],
-      "matchManagers": ["regex"],
-      "enabled": false
-    },
-    {
       "groupName": "{{parentDir}}",
       "matchPackagePatterns": [
         "cert-manager",

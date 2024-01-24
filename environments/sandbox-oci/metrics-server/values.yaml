@@ -1,7 +1,6 @@
 metrics-server:
-  args:
-    - "--kubelet-insecure-tls"
-
   podDisruptionBudget:
     enabled: true
     minAvailable: 1
+
+  containerPort: 4443

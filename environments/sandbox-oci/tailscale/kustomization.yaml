@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: tailscale
 
 resources:
-  - https://raw.githubusercontent.com/tailscale/tailscale/1a08ea5990c30caef5ad2c207c7e9ff2a94e8859/cmd/k8s-operator/deploy/crds/tailscale.com_connectors.yaml # 1.56.1 (no release with CRDs yet)
+  - https://raw.githubusercontent.com/tailscale/tailscale/v1.58.2/cmd/k8s-operator/deploy/crds/tailscale.com_connectors.yaml # 1.56.1 (no release with CRDs yet)
   - operator-oauth-sealed-secret.yaml
   - namespace.yaml # prevent migration to Helm chart from deleting namespace defined in previous manifests
 
@@ -12,7 +12,7 @@ helmCharts:
   - name: tailscale-operator
     includeCRDs: false
     releaseName: tailscale-operator
-    version: 1.56.1
+    version: 1.58.2
     repo: https://pkgs.tailscale.com/helmcharts
     valuesInline:
       operatorConfig:

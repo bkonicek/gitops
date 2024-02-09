@@ -6,6 +6,7 @@ namespace: tailscale
 resources:
   - operator-oauth-sealed-secret.yaml
   - namespace.yaml # prevent migration to Helm chart from deleting namespace defined in previous manifests
+  - connector-exit-node.yaml
 
 helmCharts:
   - name: tailscale-operator

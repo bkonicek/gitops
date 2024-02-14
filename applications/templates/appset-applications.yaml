@@ -35,6 +35,6 @@ spec:
           allowEmpty: true # Allows deleting all application resources during automatic syncing ( false by default ).
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply={{ .serverSideApply | default 'false'}}
+          - ServerSideApply='{{`{{ (.serverSideApply | quote) | default 'false'}}`}}'
   syncPolicy:
     preserveResourcesOnDeletion: true

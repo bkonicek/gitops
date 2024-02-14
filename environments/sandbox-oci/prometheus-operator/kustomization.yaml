@@ -8,4 +8,4 @@ helmCharts:
     releaseName: prometheus
     namespace: monitoring
     version: v56.6.2
-    repo: https://prometheus-community.github.io/helm-chart
+    repo: https://prometheus-community.github.io/helm-charts

@@ -11,3 +11,6 @@ env:
         key: API_TOKEN
 extraArgs:
   - "--exclude-target-net=10.0.0.0/8"
+
+serviceMonitor:
+  enabled: true

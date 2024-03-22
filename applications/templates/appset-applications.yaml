@@ -1,5 +1,5 @@
 # AppSet for custom apps that don't necessarily follow the pattern of the others.
-# Path structure is custom/<namespace>/<app name>
+# Path structure is environments/<app-name> with namespace defined in config.yaml.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:

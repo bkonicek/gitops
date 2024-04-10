@@ -1,18 +1,19 @@
-provider: cloudflare
-policy: sync
-sources:
-  - ingress
-txtOwnerId: external-dns
-env:
-  - name: CF_API_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: cf-dns
-        key: API_TOKEN
-extraArgs:
-  - "--exclude-target-net=10.0.0.0/8"
+external-dns:
+  provider: cloudflare
+  policy: sync
+  sources:
+    - ingress
+  txtOwnerId: external-dns
+  env:
+    - name: CF_API_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: cf-dns
+          key: API_TOKEN
+  extraArgs:
+    - "--exclude-target-net=10.0.0.0/8"
 
-serviceMonitor:
-  enabled: true
-  additionalLabels:
-    release: prometheus
+  serviceMonitor:
+    enabled: true
+    additionalLabels:
+      release: prometheus

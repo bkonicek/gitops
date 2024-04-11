@@ -1,4 +1,5 @@
 pihole:
+  nameOverride: pihole
   serviceDns:
     mixedService: true
     type: ClusterIP

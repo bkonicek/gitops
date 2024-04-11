@@ -1,14 +1,15 @@
-serviceDns:
-  mixedService: true
-  type: ClusterIP
-  annotations:
-    tailscale.com/expose: "true"
-admin:
-  existingSecret: pihole-admin
-doh:
-  enabled: true
-replicaCount: 2
-podAnnotations:
-  "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
-podDisruptionBudget:
-  enabled: true
+pihole:
+  serviceDns:
+    mixedService: true
+    type: ClusterIP
+    annotations:
+      tailscale.com/expose: "true"
+  admin:
+    existingSecret: pihole-admin
+  doh:
+    enabled: true
+  replicaCount: 2
+  podAnnotations:
+    "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
+  podDisruptionBudget:
+    enabled: true

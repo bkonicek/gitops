@@ -1,4 +1,10 @@
-operator:
-  create: true
-  autoRestart: true
-  pollingInterval: 300
+connect:
+  operator:
+    create: true
+    autoRestart: true
+    pollingInterval: 300
+
+  connect:
+    api:
+      serviceMonitor:
+        enabled: true

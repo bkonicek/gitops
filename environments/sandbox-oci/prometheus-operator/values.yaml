@@ -1,2 +1,3 @@
-kubeEtcd:
-  enabled: false
+kube-prometheus-stack:
+  kubeEtcd:
+    enabled: false

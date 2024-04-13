@@ -1,0 +1,8 @@
+tailscale-operator:
+  operatorConfig:
+    resources:
+      requests:
+        cpu: 500m
+        memory: 100Mi
+      limits:
+        memory: 100Mi

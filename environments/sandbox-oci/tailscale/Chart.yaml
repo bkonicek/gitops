@@ -1,5 +1,5 @@
 apiVersion: v2
-name: prometheus-operator
+name: tailscale-operator
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -24,6 +24,6 @@ version: 0.1.0
 appVersion: "1.0"
 
 dependencies:
-  - name: kube-prometheus-stack
-    repository: https://prometheus-community.github.io/helm-charts
-    version: 58.1.0
+  - name: tailscale-operator
+    repository: https://pkgs.tailscale.com/helmcharts
+    version: 1.62.1

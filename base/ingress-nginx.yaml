@@ -1,0 +1,7 @@
+ingress-nginx:
+  controller:
+    config:
+      strict-validate-path-type: true
+      enable-modsecurity: true
+    extraArgs:
+      enable-annotation-validation: true

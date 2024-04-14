@@ -5,8 +5,3 @@ ingress-nginx:
       externalTrafficPolicy: Local
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"
-    config:
-      strict-validate-path-type: true
-      enable-modsecurity: true
-    extraArgs:
-      enable-annotation-validation: true

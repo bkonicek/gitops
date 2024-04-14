@@ -9,10 +9,10 @@ spec:
   project: default
   destination:
     namespace: argocd
-    server: {{ .Values.spec.destination.server }}
+    server: https://kubernetes.default.svc
   source:
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    repoURL: https://github.com/bkonicek/gitops
+    targetRevision: HEAD
     path: core/argocd
   syncPolicy:
     # automated:

@@ -10,25 +10,30 @@ spec:
   # goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: {{ .Values.spec.source.repoURL }}
-        revision: {{ .Values.spec.source.targetRevision }}
+        repoURL: https://github.com/bkonicek/gitops
+        revision: HEAD
         files:
           - path: environments/*/*/config.yaml
   template:
     metadata:
-      name: '{{`{{index .path.segments 1}}`}}-{{`{{.path.basenameNormalized}}`}}'
+      name: '{{index .path.segments 1}}-{{.path.basenameNormalized}}'
       labels:
-        app_name: '{{`{{.path.basenameNormalized}}`}}'
-        environment: '{{`{{index .path.segments 1}}`}}'
+        app_name: '{{.path.basenameNormalized}}'
+        environment: '{{index .path.segments 1}}'
     spec:
       project: default
       destination:
-        namespace: '{{`{{ .namespace }}`}}'
-        server: {{ .Values.spec.destination.server }}
+        namespace: '{{ .namespace }}'
+        server: https://kubernetes.default.svc
       source:
-        repoURL: {{ .Values.spec.source.repoURL }}
-        targetRevision: '{{`{{ .targetRevision }}`}}'
-        path: '{{`{{ .path.path }}`}}'
+        repoURL: https://github.com/bkonicek/gitops
+        targetRevision: '{{ .targetRevision | default "HEAD" }}'
+        path: '{{ .path.path }}'
+        helm:
+          valueFiles:
+            - ../../../base/{{ default (printf "%s.yaml" .path.basenameNormalized) .baseValuesFile }}
+            - values.yaml
+          ignoreMissingValueFiles: true
       syncPolicy:
         automated:
           prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
@@ -36,6 +41,6 @@ spec:
           allowEmpty: true # Allows deleting all application resources during automatic syncing ( false by default ).
         syncOptions:
           - CreateNamespace=true
-          - ServerSideApply={{`{{ .serverSideApply | default "false"}}`}}
+          - ServerSideApply='{{ .serverSideApply | default "false"}}'
   syncPolicy:
     preserveResourcesOnDeletion: true

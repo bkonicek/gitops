@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ts-app-connector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ts-app-connector
+  serviceName: ts-app-connector
+  template:
+    metadata:
+      labels:
+        app: ts-app-connector
+    spec:
+      containers:
+        - env:
+            - name: TS_USERSPACE
+              value: "true"
+            - name: TS_ACCEPT_DNS
+              value: "true"
+            - name: TS_KUBE_SECRET
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale-auth
+                  key: TS_AUTHKEY
+                  optional: false
+            - name: TS_EXTRA_ARGS
+              value: >
+                --advertise-connector
+                --advertise-tags=tag:connector
+                --reset
+          image: tailscale/tailscale:v1.62.1
+          name: tailscale
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+      serviceAccount: proxies
+      serviceAccountName: proxies

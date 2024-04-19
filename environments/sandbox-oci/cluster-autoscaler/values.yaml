@@ -12,7 +12,7 @@ cluster-autoscaler:
 
   image:
     repository: iad.ocir.io/oracle/oci-cluster-autoscaler
-    tag: 1.27.2-9 # https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengusingclusterautoscaler_topic-Working_with_the_Cluster_Autoscaler.htm#Working_with_the_Cluster_Autoscaler
+    tag: 1.28.2-3 # https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengusingclusterautoscaler_topic-Working_with_the_Cluster_Autoscaler.htm#Working_with_the_Cluster_Autoscaler
     imagePullPolicy: Always
 
   extraEnv:
@@ -23,7 +23,7 @@ cluster-autoscaler:
 
   autoscalingGroups:
     - name: ocid1.nodepool.oc1.iad.aaaaaaaap2gxdttgxisgag36xupwwnga7vsj43ub6kdcuop3nnq4lyxlh2wa
-      minSize: 3
-      maxSize: 4
+      minSize: 2
+      maxSize: 3
 
   fullnameOverride: cluster-autoscaler

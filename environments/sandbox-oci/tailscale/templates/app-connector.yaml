@@ -35,7 +35,7 @@ spec:
                 --advertise-connector
                 --advertise-tags=tag:connector
                 --reset
-          image: tailscale/tailscale:v1.62.1
+          image: tailscale/tailscale:v1.64.1
           name: tailscale
           securityContext:
             runAsUser: 1000

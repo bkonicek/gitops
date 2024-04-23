@@ -36,7 +36,7 @@ spec:
                 --snat-subnet-routes
                 --reset
             - name: TS_ROUTES
-              value: 129.80.251.52/32
+              value: 129.213.200.122/32
           image: tailscale/tailscale:v1.64.1
           name: tailscale
           securityContext:

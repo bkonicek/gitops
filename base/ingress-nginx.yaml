@@ -3,5 +3,6 @@ ingress-nginx:
     config:
       strict-validate-path-type: true
       enable-modsecurity: true
+      use-forwarded-headers: true
     extraArgs:
       enable-annotation-validation: true

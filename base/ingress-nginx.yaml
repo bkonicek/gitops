@@ -4,5 +4,8 @@ ingress-nginx:
       strict-validate-path-type: true
       enable-modsecurity: true
       use-forwarded-headers: true
+      use-proxy-protocol: true
+      server-snippet: |
+        real_ip_header CF-Connecting-IP;
     extraArgs:
       enable-annotation-validation: true

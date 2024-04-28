@@ -2,6 +2,7 @@ ingress-nginx:
   controller:
     replicaCount: 2
     service:
+      loadBalancerIP: "129.80.251.52"
       externalTrafficPolicy: Local
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"

@@ -37,7 +37,7 @@ spec:
                 --reset
             - name: TS_ROUTES
               value: 129.213.200.122/32
-          image: tailscale/tailscale:v1.64.1
+          image: tailscale/tailscale:v1.66.4
           name: tailscale
           securityContext:
             runAsUser: 1000

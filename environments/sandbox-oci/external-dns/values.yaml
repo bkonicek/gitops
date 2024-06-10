@@ -3,6 +3,7 @@ external-dns:
   policy: sync
   sources:
     - ingress
+    - crd
   txtOwnerId: external-dns
   env:
     - name: CF_API_TOKEN

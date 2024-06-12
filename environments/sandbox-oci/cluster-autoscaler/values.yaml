@@ -1,3 +1,6 @@
+autoscaler:
+  enabled: false
+
 cluster-autoscaler:
   cloudProvider: oci
 
@@ -9,6 +12,7 @@ cluster-autoscaler:
     balancing-ignore-label_2: hostname
     balancing-ignore-label_3: internal_addr
     balancing-ignore-label_4: oci.oraclecloud.com/fault-domain
+    scale-down-delay-after-add: 10m
 
   image:
     repository: iad.ocir.io/oracle/oci-cluster-autoscaler

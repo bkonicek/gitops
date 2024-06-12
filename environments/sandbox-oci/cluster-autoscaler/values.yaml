@@ -12,7 +12,7 @@ cluster-autoscaler:
 
   image:
     repository: iad.ocir.io/oracle/oci-cluster-autoscaler
-    tag: 1.28.2-3 # https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengusingclusterautoscaler_topic-Working_with_the_Cluster_Autoscaler.htm#Working_with_the_Cluster_Autoscaler
+    tag: 1.29.0-3 # https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengusingclusterautoscaler_topic-Working_with_the_Cluster_Autoscaler.htm#Working_with_the_Cluster_Autoscaler
     imagePullPolicy: Always
 
   extraEnv:

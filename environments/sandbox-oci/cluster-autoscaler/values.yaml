@@ -22,7 +22,7 @@ cluster-autoscaler:
   replicaCount: 2
 
   autoscalingGroups:
-    - name: ocid1.cluster.oc1.iad.aaaaaaaax2ulxgekqrabf4obt63p3s2icebtsvacyzzekuivsckohnyqw6ia
+    - name: ocid1.nodepool.oc1.iad.aaaaaaaap2gxdttgxisgag36xupwwnga7vsj43ub6kdcuop3nnq4lyxlh2wa
       minSize: 2
       maxSize: 3
 

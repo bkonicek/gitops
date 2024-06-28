@@ -25,13 +25,19 @@ dnsZone: benkonicek.com
 # Create DNSEndpoint resources
 dnsEndpoints:
   # YAML map of DNSEndpoints to create
+  # www:
+  #   # DNS record type
+  #   type: CNAME
+  #   # List of targets to point the record to
+  #   targets:
+  #     - example.com
+  #     # Enable proxying the record through cloudflare
+  #   proxy: true
+  #   # TTL for the record
+  #   ttl: 180
   blog:
-    # DNS record type
     type: CNAME
-    # List of targets to point the record to
     targets:
       - bkonicek.github.io
-    # Enable proxying the record through cloudflare
     proxy: false
-    # TTL for the record
     ttl: 180

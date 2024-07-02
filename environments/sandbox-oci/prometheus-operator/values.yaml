@@ -2,6 +2,6 @@ kube-prometheus-stack:
   kubeEtcd:
     enabled: false
 
-grafana:
-  plugins:
-    - oci-metrics-datasource
+  grafana:
+    plugins:
+      - oci-metrics-datasource

@@ -7,10 +7,12 @@ kube-prometheus-stack:
       - oci-metrics-datasource
     datasources:
       datasources.yaml:
-        - name: oci-metrics-datasource
-          type: oci-metrics-datasource
-          editable: true
-          access: proxy
-          jsonData:
-            profile0: "DEFAULT"
-            environment: "OCI Instance"
+        apiVersion: 1
+        datasources:
+          - name: oci-metrics-datasource
+            type: oci-metrics-datasource
+            editable: true
+            access: proxy
+            jsonData:
+              profile0: "DEFAULT"
+              environment: "OCI Instance"

@@ -5,3 +5,12 @@ kube-prometheus-stack:
   grafana:
     plugins:
       - oci-metrics-datasource
+    datasources:
+      datasources.yaml:
+        - name: oci-metrics-datasource
+          type: oci-metrics-datasource
+          editable: true
+          access: proxy
+          jsonData:
+            profile0: "DEFAULT"
+            environment: "OCI Instance"

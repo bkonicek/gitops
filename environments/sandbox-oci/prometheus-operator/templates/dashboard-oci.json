@@ -1,0 +1,402 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [],
+      "title": "Compute Instances",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "oci-metrics-datasource",
+        "uid": "P42A70143DDA728DC"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Status",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "compartment": "ocid1.tenancy.oc1..aaaaaaaagrijaszt6hht7kcyfsjbgax6d4kigppo234qrs2f6ftp5k7nlocq",
+          "compartmentName": "benkonicek",
+          "datasource": {
+            "type": "oci-metrics-datasource",
+            "uid": "P42A70143DDA728DC"
+          },
+          "dimensionValues": [],
+          "groupBy": "select option (optional)",
+          "hide": false,
+          "interval": "select interval",
+          "metric": "instance_status",
+          "metricNames": [
+            "instance_status",
+            "maintenance_status"
+          ],
+          "namespace": "oci_compute_infrastructure_health",
+          "queryText": "instance_status[1m].count()",
+          "queryTextRaw": "",
+          "rawQuery": true,
+          "refId": "A",
+          "region": "us-ashburn-1",
+          "resourcegroup": "",
+          "statistic": "count()",
+          "statisticLabel": "count",
+          "tagsValues": [],
+          "tenancy": "DEFAULT/",
+          "tenancyName": "DEFAULT/"
+        }
+      ],
+      "title": "Instance Health",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "oci-metrics-datasource",
+        "uid": "P42A70143DDA728DC"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 7,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "compartment": "ocid1.tenancy.oc1..aaaaaaaagrijaszt6hht7kcyfsjbgax6d4kigppo234qrs2f6ftp5k7nlocq",
+          "compartmentName": "benkonicek",
+          "datasource": {
+            "type": "oci-metrics-datasource",
+            "uid": "P42A70143DDA728DC"
+          },
+          "dimensionValues": [],
+          "groupBy": "select option (optional)",
+          "hide": false,
+          "interval": "select interval",
+          "metric": "CpuUtilization",
+          "metricNames": [
+            "CpuUtilization",
+            "DiskBytesRead",
+            "DiskBytesWritten",
+            "DiskIopsRead",
+            "DiskIopsWritten",
+            "LoadAverage",
+            "MemoryAllocationStalls",
+            "MemoryUtilization",
+            "NetworksBytesIn",
+            "NetworksBytesOut"
+          ],
+          "namespace": "oci_computeagent",
+          "queryText": "CpuUtilization[1m].avg()",
+          "queryTextRaw": "",
+          "rawQuery": true,
+          "refId": "A",
+          "region": "us-ashburn-1",
+          "resourcegroup": "",
+          "statistic": "avg()",
+          "statisticLabel": "average",
+          "tagsValues": [],
+          "tenancy": "DEFAULT/",
+          "tenancyName": "DEFAULT/"
+        }
+      ],
+      "title": "CPU Utilization",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "oci-metrics-datasource",
+        "uid": "P42A70143DDA728DC"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 14,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "compartment": "ocid1.tenancy.oc1..aaaaaaaagrijaszt6hht7kcyfsjbgax6d4kigppo234qrs2f6ftp5k7nlocq",
+          "compartmentName": "benkonicek",
+          "datasource": {
+            "type": "oci-metrics-datasource",
+            "uid": "P42A70143DDA728DC"
+          },
+          "dimensionValues": [],
+          "groupBy": "select option (optional)",
+          "hide": false,
+          "interval": "select interval",
+          "metric": "MemoryUtilization",
+          "metricNames": [
+            "CpuUtilization",
+            "DiskBytesRead",
+            "DiskBytesWritten",
+            "DiskIopsRead",
+            "DiskIopsWritten",
+            "LoadAverage",
+            "MemoryAllocationStalls",
+            "MemoryUtilization",
+            "NetworksBytesIn",
+            "NetworksBytesOut"
+          ],
+          "namespace": "oci_computeagent",
+          "queryText": "MemoryUtilization[1m].avg()",
+          "queryTextRaw": "",
+          "rawQuery": true,
+          "refId": "A",
+          "region": "us-ashburn-1",
+          "resourcegroup": "NoResourceGroup",
+          "statistic": "avg()",
+          "tagsValues": [],
+          "tenancy": "DEFAULT/",
+          "tenancyName": "DEFAULT/"
+        }
+      ],
+      "title": "Memory Utilization",
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "New dashboard",
+  "version": 0,
+  "weekStart": ""
+}

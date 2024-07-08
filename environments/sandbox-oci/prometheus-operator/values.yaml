@@ -16,3 +16,7 @@ kube-prometheus-stack:
             jsonData:
               profile0: "DEFAULT"
               environment: "OCI Instance"
+
+  prometheus:
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false

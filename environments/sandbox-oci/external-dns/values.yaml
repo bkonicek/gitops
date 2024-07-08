@@ -17,7 +17,7 @@ external-dns:
   serviceMonitor:
     enabled: true
     additionalLabels:
-      release: prometheus
+      release: sandbox-oci-prometheus-operator
 
 # DNS zone
 dnsZone: benkonicek.com

@@ -1,6 +1,10 @@
 kube-prometheus-stack:
   kubeEtcd:
     enabled: false
+  kubeControllerManager:
+    enabled: false
+  kubeScheduler:
+    enabled: false
 
   grafana:
     plugins:

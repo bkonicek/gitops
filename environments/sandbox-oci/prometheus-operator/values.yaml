@@ -20,6 +20,23 @@ kube-prometheus-stack:
             jsonData:
               profile0: "DEFAULT"
               environment: "OCI Instance"
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: "default"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    dashboards:
+      default:
+        argocd:
+          url: https://raw.githubusercontent.com/argoproj/argo-cd/master/examples/dashboard.json
+          token: ""
 
   prometheus:
     prometheusSpec:

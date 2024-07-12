@@ -11,6 +11,10 @@ kube-prometheus-stack:
       annotations:
         tailscale.com/expose: "true"
         tailscale.com/hostname: grafana
+    admin:
+      existingSecret: "grafana-admin"
+      userKey: username
+      passwordKey: password
     plugins:
       - oci-metrics-datasource
     datasources:

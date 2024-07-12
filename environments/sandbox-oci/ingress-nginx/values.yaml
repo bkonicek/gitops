@@ -5,3 +5,7 @@ ingress-nginx:
       externalTrafficPolicy: Local
       annotations:
         oci.oraclecloud.com/load-balancer-type: "nlb"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true

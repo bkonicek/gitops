@@ -37,6 +37,9 @@ kube-prometheus-stack:
         argocd:
           url: https://raw.githubusercontent.com/argoproj/argo-cd/master/examples/dashboard.json
           token: ""
+        ingress-nginx:
+          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
+          token: ""
 
   prometheus:
     prometheusSpec:

@@ -32,6 +32,14 @@ kube-prometheus-stack:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: "externaldns"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/edns
     dashboards:
       default:
         argocd:
@@ -44,6 +52,8 @@ kube-prometheus-stack:
           gnetId: 15038
           revision: 3
           datasource: Prometheus
+    dashboardsConfigMaps:
+      edns: sandbox-oci-sealed-secrets-controller-sealed-secrets-controller
 
   prometheus:
     prometheusSpec:

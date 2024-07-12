@@ -9,7 +9,7 @@ kube-prometheus-stack:
   grafana:
     service:
       annotations:
-        tailscale.com/expose: true
+        tailscale.com/expose: "true"
         tailscale.com/hostname: grafana
     plugins:
       - oci-metrics-datasource

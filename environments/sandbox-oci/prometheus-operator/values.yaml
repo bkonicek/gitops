@@ -40,6 +40,10 @@ kube-prometheus-stack:
         ingress-nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
           token: ""
+        external-dns:
+          gnetId: 15038
+          revision: 3
+          datasource: Prometheus
 
   prometheus:
     prometheusSpec:

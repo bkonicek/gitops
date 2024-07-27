@@ -10,4 +10,4 @@ tailscale-operator:
 appConnector:
   image:
     repository: tailscale/tailscale
-    tag: v1.68.1
+    tag: v1.70.0

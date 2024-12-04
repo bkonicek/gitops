@@ -8,6 +8,7 @@ tailscale-operator:
         memory: 100Mi
 
 appConnector:
+  enabled: false
   image:
     repository: tailscale/tailscale
     tag: v1.76.6

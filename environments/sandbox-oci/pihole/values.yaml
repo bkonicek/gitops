@@ -8,7 +8,7 @@ pihole:
   admin:
     existingSecret: pihole-admin
   doh:
-    enabled: true
+    enabled: false
   replicaCount: 1
   podAnnotations:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"

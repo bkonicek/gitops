@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.9/manifests/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.14.10/manifests/install.yaml
   - manifests/dex-okta-ca-cert-sealed-secret.yaml
   - manifests/dex-ingress.yaml
   - manifests/service-monitors.yaml

@@ -14,10 +14,10 @@ pihole:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
   podDisruptionBudget:
     enabled: false
-  extraEnvVars:
-    FTLCONF_dns_listeningMode: "all"
-  probes:
-    liveness:
-      initialDelaySeconds: 30
-    readiness:
-      initialDelaySeconds: 30
+  # extraEnvVars:
+  #   FTLCONF_dns_listeningMode: "all"
+  # probes:
+  #   liveness:
+  #     initialDelaySeconds: 30
+  #   readiness:
+  #     initialDelaySeconds: 30

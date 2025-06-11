@@ -16,3 +16,5 @@ pihole:
     enabled: false
   extraEnvVars:
     FTLCONF_dns_listeningMode: "all"
+  podDnsConfig:
+    enabled: false

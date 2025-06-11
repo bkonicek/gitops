@@ -14,3 +14,5 @@ pihole:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
   podDisruptionBudget:
     enabled: false
+  extraEnvVars:
+    FTLCONF_dns_listeningMode: "all"

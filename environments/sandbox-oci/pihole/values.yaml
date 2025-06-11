@@ -18,3 +18,8 @@ pihole:
     FTLCONF_dns_listeningMode: "all"
   podDnsConfig:
     enabled: false
+  probes:
+    liveness:
+      initialDelaySeconds: 300
+    readiness:
+      initialDelaySeconds: 300

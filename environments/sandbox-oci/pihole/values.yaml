@@ -16,10 +16,8 @@ pihole:
     enabled: false
   extraEnvVars:
     FTLCONF_dns_listeningMode: "all"
-  podDnsConfig:
-    enabled: false
   probes:
     liveness:
-      initialDelaySeconds: 300
+      initialDelaySeconds: 30
     readiness:
-      initialDelaySeconds: 300
+      initialDelaySeconds: 30

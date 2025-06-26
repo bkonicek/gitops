@@ -11,4 +11,4 @@ appConnector:
   enabled: false
   image:
     repository: tailscale/tailscale
-    tag: v1.84.2
+    tag: v1.84.3

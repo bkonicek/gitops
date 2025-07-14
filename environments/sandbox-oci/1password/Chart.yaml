@@ -26,4 +26,4 @@ appVersion: "1.0"
 dependencies:
   - name: connect
     repository: https://1password.github.io/connect-helm-charts/
-    version: 2.0.1
+    version: 2.0.2

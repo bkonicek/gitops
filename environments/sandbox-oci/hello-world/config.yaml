@@ -1,0 +1,4 @@
+namespace: default
+targetRevision: 1.2.2
+repoUrl: charts.softonic.io
+chartName: hello-world-app

@@ -2,3 +2,4 @@ namespace: default
 targetRevision: 1.2.2
 repoURL: https://charts.softonic.io
 chartName: hello-world-app
+valuesRevision: test-template-patch

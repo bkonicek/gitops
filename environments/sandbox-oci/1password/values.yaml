@@ -3,3 +3,4 @@ connect:
     api:
       serviceMonitor:
         enabled: true
+      imageRepository: docker.io/1password/connect-api

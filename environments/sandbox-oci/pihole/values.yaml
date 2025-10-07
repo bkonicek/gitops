@@ -11,6 +11,7 @@ pihole:
     existingSecret: pihole-admin
   doh:
     enabled: true
+    repository: docker.io/crazymax/cloudflared
   replicaCount: 1
   podAnnotations:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"

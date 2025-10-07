@@ -8,6 +8,9 @@ tailscale-operator:
         memory: 100Mi
     image:
       repository: docker.io/tailscale/k8s-operator
+  proxyConfig:
+    image:
+      repository: docker.io/tailscale/tailscale
 
 appConnector:
   enabled: false

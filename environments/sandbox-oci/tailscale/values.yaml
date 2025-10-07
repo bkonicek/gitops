@@ -7,7 +7,7 @@ tailscale-operator:
       limits:
         memory: 100Mi
     image:
-      repository: docker.io/k8s-operator
+      repository: docker.io/tailscale/k8s-operator
 
 appConnector:
   enabled: false

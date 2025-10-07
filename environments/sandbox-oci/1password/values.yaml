@@ -4,3 +4,7 @@ connect:
       serviceMonitor:
         enabled: true
       imageRepository: docker.io/1password/connect-api
+    sync:
+      imageRepository: docker.io/1password/connect-sync
+  operator:
+    imageRepository: docker.io/1password/onepassword-operator

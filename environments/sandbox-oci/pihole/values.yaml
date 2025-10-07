@@ -1,4 +1,6 @@
 pihole:
+  image:
+    repository: docker.io/pihole/pihole
   nameOverride: pihole
   serviceDns:
     mixedService: true

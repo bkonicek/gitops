@@ -16,4 +16,4 @@ appConnector:
   enabled: false
   image:
     repository: docker.io/tailscale/tailscale
-    tag: v1.88.3
+    tag: v1.88.4

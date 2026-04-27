@@ -9,3 +9,5 @@ traefik:
     prometheus:
       serviceMonitor:
         enabled: true
+  ingressClass:
+    name: traefik

@@ -1,10 +1,12 @@
 traefik:
   providers:
-    kubernetesIngressNginx:
+    kubernetesIngressNGINX:
       enabled: true
   service:
     annotations:
       oci.oraclecloud.com/load-balancer-type: "nlb"
+    spec:
+      externalTrafficPolicy: Local
   metrics:
     prometheus:
       serviceMonitor:

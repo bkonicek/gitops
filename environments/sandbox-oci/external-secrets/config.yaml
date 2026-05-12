@@ -1,0 +1,2 @@
+namespace: external-secrets
+targetRevision: HEAD

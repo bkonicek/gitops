@@ -8,6 +8,7 @@ resources:
   - manifests/dex-okta-ca-cert-sealed-secret.yaml
   - manifests/dex-ingress.yaml
   - manifests/service-monitors.yaml
+  - manifests/externalsecret-webhook.yaml
   # - argocd.yaml
 
 patches:

@@ -26,3 +26,7 @@ patches:
       name: argocd-server
   - path: manifests/dex-okta-ca-mount.yaml
   - path: manifests/argocd-cm.yaml
+  - path: manifests/argocd-secret.yaml
+    target:
+      kind: Secret
+      name: argocd-secret

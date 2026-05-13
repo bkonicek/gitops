@@ -9,6 +9,7 @@ resources:
   - manifests/dex-ingress.yaml
   - manifests/service-monitors.yaml
   - manifests/externalsecret-webhook.yaml
+  - manifests/webhook-ingress.yaml
   # - argocd.yaml
 
 patches:

@@ -8,6 +8,7 @@ metadata:
 data:
   kustomize.buildOptions: --enable-helm
   application.instanceLabelKey: argocd.argoproj.io/instance
+  webhook.github.secret: $argocd-webhook-secret:secret
   url: http://argo
   dex.config: |
     logger:

@@ -1,5 +1,6 @@
 tailscale-operator:
   operatorConfig:
+    hostname: sandbox-oci-cluster
     resources:
       requests:
         cpu: 500m
@@ -11,6 +12,8 @@ tailscale-operator:
   proxyConfig:
     image:
       repository: docker.io/tailscale/tailscale
+  apiServerProxyConfig:
+    mode: true
 
 appConnector:
   enabled: false

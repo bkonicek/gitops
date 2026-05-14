@@ -30,3 +30,7 @@ patches:
     target:
       kind: Secret
       name: argocd-secret
+  - path: manifests/argocd-cmd-params-cm.yaml
+    target:
+      kind: ConfigMap
+      name: argocd-cmd-params-cm

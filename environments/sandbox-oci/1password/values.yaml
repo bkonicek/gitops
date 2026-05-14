@@ -1,4 +1,0 @@
-connect:
-  operator:
-    imageRepository: docker.io/1password/onepassword-operator
-    authMethod: service-account

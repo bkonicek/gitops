@@ -32,6 +32,7 @@ jobs:
             -v $(pwd)/output:/output \
             -e TARGET_BRANCH=refs/pull/${{ github.event.number }}/merge \
             -e REPO=${{ github.repository }} \
+            --file-regex="^(?!.*/whoami/).*$"
             dagandersen/argocd-diff-preview:v0.2.6
 
       - name: Post diff as comment

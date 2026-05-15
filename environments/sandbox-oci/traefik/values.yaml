@@ -9,6 +9,7 @@ traefik:
       externalTrafficPolicy: Local
   metrics:
     prometheus:
+      disableAPICheck: true
       serviceMonitor:
         enabled: true
   ingressClass:

@@ -4,12 +4,14 @@ metadata:
   name: minimal-ingress
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.middlewares: default-test-redirectscheme@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - hosts:
         - whoami.benkonicek.com
-      secretName: whoami-cert
+      secretName: whoami-cert-new
   rules:
     - host: whoami.benkonicek.com
       http:

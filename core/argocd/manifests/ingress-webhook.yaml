@@ -4,8 +4,9 @@ metadata:
   name: argocd-server-webhook
   namespace: argocd
   annotations:
-    ingress.kubernetes.io/force-ssl-redirect: "true"
     cert-manager.io/cluster-issuer: letsencrypt-http
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.middlewares: argocd-redirectscheme@kubernetescrd
 spec:
   rules:
     - host: argocd.benkonicek.com

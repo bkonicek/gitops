@@ -1,3 +1,0 @@
-local-path-provisioner:
-  storageClass:
-    defaultClass: true

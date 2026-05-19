@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-http
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
-    traefik.ingress.kubernetes.io/router.middlewares: argocd-redirectscheme@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-redirectscheme@kubernetescrd
 spec:
   rules:
     - host: argocd.benkonicek.com

@@ -19,3 +19,5 @@ traefik:
   logs:
     access:
       enabled: true
+  additionalArguments:
+    - "--entrypoints.websecure.http.middlewares=traefik-default-headers@kubernetescrd"

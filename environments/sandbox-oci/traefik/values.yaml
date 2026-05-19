@@ -2,6 +2,8 @@ traefik:
   providers:
     kubernetesIngressNGINX:
       enabled: true
+    kubernetesCRD:
+      allowCrossNamespace: true
   service:
     annotations:
       oci.oraclecloud.com/load-balancer-type: "nlb"

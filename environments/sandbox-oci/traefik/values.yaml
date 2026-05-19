@@ -14,7 +14,3 @@ traefik:
         enabled: true
   ingressClass:
     name: traefik
-  additionalArguments:
-    - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-    # - "--entrypoints.web.http.redirections.entryPoint.permanent=true"
-    - "--entrypoints.web.http.redirections.entryPoint.priority=10"

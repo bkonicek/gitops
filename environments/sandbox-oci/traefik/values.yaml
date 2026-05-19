@@ -16,3 +16,6 @@ traefik:
         enabled: true
   ingressClass:
     name: traefik
+  logs:
+    access:
+      enabled: true

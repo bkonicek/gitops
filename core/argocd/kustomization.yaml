@@ -10,6 +10,7 @@ resources:
   - manifests/service-monitors.yaml
   - manifests/externalsecret-webhook.yaml
   - manifests/ingress-webhook.yaml
+  - manifests/middleware-redirect.yaml
   # - argocd.yaml
 
 patches:

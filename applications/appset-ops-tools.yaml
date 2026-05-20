@@ -13,8 +13,7 @@ spec:
         repoURL: https://github.com/bkonicek/gitops
         revision: HEAD
         files:
-          - path: environments/sandbox-oci/metrics-server/config.yaml
-          - path: environments/sandbox-oci/prometheus-operator/config.yaml
+          - path: environments/*/*/config.yaml
   template:
     metadata:
       name: "{{index .path.segments 1}}-{{.path.basenameNormalized}}"

@@ -16,6 +16,8 @@ spec:
           - path: environments/*/*/config.yaml
           - path: environments/sandbox-oci/metrics-server/config.yaml
             exclude: true
+          - path: environments/sandbox-oci/prometheus-operator/config.yaml
+            exclude: true
   template:
     metadata:
       name: "{{index .path.segments 1}}-{{.path.basenameNormalized}}"

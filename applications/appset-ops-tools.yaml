@@ -41,7 +41,7 @@ spec:
         - repoURL: '{{ .repoURL | default "https://github.com/bkonicek/gitops" }}'
           targetRevision: '{{ .targetRevision | default "HEAD" }}'
           path: "charts/{{ .path.basenameNormalized }}"
-          {{- if and (ne .repoURL "") (ne .repoURL "https://github.com/bkonicek/gitops") }}
+          {{- if and (hasKey . "repoURL") (ne .repoURL "https://github.com/bkonicek/gitops") }}
           chart: '{{ .chartName | default .path.basenameNormalized }}'
           {{- end }}
           helm:

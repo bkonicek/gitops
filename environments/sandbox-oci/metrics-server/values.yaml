@@ -1,6 +1,3 @@
-metrics-server:
-  podDisruptionBudget:
-    enabled: false
-    # minAvailable: 1
-
-  containerPort: 4443
+podDisruptionBudget:
+  enabled: false
+containerPort: 4443

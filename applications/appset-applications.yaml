@@ -1,5 +1,5 @@
 # AppSet for custom apps that don't necessarily follow the pattern of the others.
-# Path structure is environments/<app-name> with namespace defined in config.yaml.
+# Path structure is environments/<cluster>/<app>/config.yaml with namespace defined in config.yaml.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -14,6 +14,8 @@ spec:
         revision: HEAD
         files:
           - path: environments/*/*/config.yaml
+          - path: environments/sandbox-oci/metrics-server/config.yaml
+            exclude: true
   template:
     metadata:
       name: "{{index .path.segments 1}}-{{.path.basenameNormalized}}"

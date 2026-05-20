@@ -1,5 +1,5 @@
 This Helm chart defines the `Applications` and `ApplicationSets` that ArgoCD should manage.
 
 Any new applications that you want to deploy should be defined here under `/templates`. If you need to change values or Kustomize the deployments, you can point the application source at a subfolder of this repository (e.g. `core/argocd`) and make whatever configuration changes you need.
-
+Shared Helm charts now live under `charts/<app>`, while environment-specific deployment configuration belongs in `environments/<cluster>/<app>/config.yaml` and `environments/<cluster>/<app>/values.yaml`. For example, `charts/metrics-server/` can be reused across clusters while `environments/sandbox-oci/metrics-server/` contains the cluster-specific namespace and value overrides. This lets the ApplicationSet reuse charts across clusters and still sync on changes in either the chart or the environment override.
 To easily deploy new applications without having to write a new Application manifest, you can configure it in one of the `ApplicationSet` directories. These will automatically generate the `Application` spec from the template, based on the directory you configure it in. 

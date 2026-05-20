@@ -1,4 +1,8 @@
 kube-prometheus-stack:
+  prometheus:
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false
+
   grafana:
     service:
       annotations:

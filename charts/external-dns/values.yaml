@@ -1,0 +1,19 @@
+external-dns:
+  provider: cloudflare
+  policy: sync
+  sources:
+    - ingress
+    - crd
+  txtOwnerId: external-dns
+  env:
+    - name: CF_API_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: cf-dns
+          key: API_TOKEN
+
+  serviceMonitor:
+    enabled: true
+
+# DNS zone
+dnsZone: benkonicek.com

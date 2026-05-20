@@ -18,7 +18,22 @@
       "fileMatch": "kustomization.yaml",
       "matchStrings": ["https:\/\/raw.githubusercontent.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"],
       "datasourceTemplate": "github-tags",
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)config\\.ya?ml$"
+      ],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "targetRevision:\\s*(?<currentValue>[^\\s]+)",
+        "repoURL:\\s*(?<registryUrl>https?://[^\\s]+)",
+        "chartName:\\s*(?<depName>[^\\s]+)"
+      ],
+      "datasourceTemplate": "helm"
     }
+  ]
+}
   ],
   "packageRules": [
     {

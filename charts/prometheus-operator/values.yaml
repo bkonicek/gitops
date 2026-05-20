@@ -55,3 +55,7 @@ kube-prometheus-stack:
           token: ""
         external-dns:
           gnetId: 15038
+          revision: 3
+          datasource: Prometheus
+    dashboardsConfigMaps:
+      edns: sandbox-oci-sealed-secrets-controller-sealed-secrets-controller

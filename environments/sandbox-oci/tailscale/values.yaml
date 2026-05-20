@@ -1,22 +1,3 @@
 tailscale-operator:
   operatorConfig:
     hostname: sandbox-oci-cluster
-    resources:
-      requests:
-        cpu: 500m
-        memory: 100Mi
-      limits:
-        memory: 100Mi
-    image:
-      repository: docker.io/tailscale/k8s-operator
-  proxyConfig:
-    image:
-      repository: docker.io/tailscale/tailscale
-  apiServerProxyConfig:
-    mode: true
-
-appConnector:
-  enabled: false
-  image:
-    repository: docker.io/tailscale/tailscale
-    tag: v1.96.5

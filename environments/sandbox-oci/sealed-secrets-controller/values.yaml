@@ -1,9 +1,0 @@
-sealed-secrets:
-  metrics:
-    serviceMonitor:
-      enabled: true
-    dashboards:
-      create: true
-      namespace: monitoring
-      labels:
-        grafana_dashboard: "1"

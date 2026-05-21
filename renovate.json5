@@ -60,7 +60,7 @@
       // fallback if neither chartName nor releaseName exists
       depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{replace "^.*/" "" packageFileDir}}{{/if}}',
       datasourceTemplate: 'docker',
-    }
+    },
   ],
   packageRules: [
     {

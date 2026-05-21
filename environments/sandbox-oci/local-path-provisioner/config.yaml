@@ -1,0 +1,6 @@
+namespace: local-path-storage
+releaseName: local-path-provisioner
+
+repoURL: ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
+targetRevision: 0.0.36
+chartPath: "."

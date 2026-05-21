@@ -33,9 +33,6 @@
       managerFilePatterns: [
         '/(^|/)config\\.ya?ml$/',
       ],
-      excludeStrings: [
-        'repoURL:\\s*oci://',
-      ],
       matchStringsStrategy: 'combination',
       matchStrings: [
         'targetRevision:\\s*(?<currentValue>[^\\s]+)',

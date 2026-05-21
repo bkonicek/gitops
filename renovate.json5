@@ -30,11 +30,11 @@
     {
       customType: 'regex',
       managerFilePatterns: [
-        '/(^|\\/)(?<depName>[^\\/]+)\\/config\\.ya?ml$/',
+        '/(^|/)config\\.ya?ml$/',
       ],
       matchStringsStrategy: 'combination',
       matchStrings: [
-        'targetRevision:\\s*(?<currentValue>v?\\d+\\.\\d+\\.\\d+)',
+        'targetRevision:\\s*(?<currentValue>[^\\s]+)',
         'repoURL:\\s*(?<registryUrl>https?://[^\\s]+)',
         'chartName:\\s*(?<depName>[^\\s]+)',
       ],

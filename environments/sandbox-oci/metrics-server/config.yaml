@@ -1,3 +1,4 @@
 namespace: kube-system
 repoURL: https://kubernetes-sigs.github.io/metrics-server
 targetRevision: 3.13.0
+chartName: metrics-server

@@ -29,8 +29,12 @@
     },
     {
       customType: 'regex',
+      description: 'ArgoCD config Helm charts'
       managerFilePatterns: [
         '/(^|/)config\\.ya?ml$/',
+      ],
+      excludeStrings: [
+        'repoURL:\\s*oci://',
       ],
       matchStringsStrategy: 'combination',
       matchStrings: [
@@ -40,6 +44,23 @@
       ],
       datasourceTemplate: 'helm',
     },
+    {
+      customType: 'regex',
+      description: 'OCI Helm charts',
+      managerFilePatterns: [
+        '/(^|/)config\\.ya?ml$/',
+      ],
+      matchStringsStrategy: 'combination',
+      matchStrings: [
+        'repoURL:\\s*(?<registryUrl>oci://\\S+)',
+        'targetRevision:\\s*(?<currentValue>v?\\d+\\.\\d+\\.\\d+)',
+        'chartPath:\\s*(?<chartPath>[^\\s]+)',
+        '(?:chartName|releaseName):\\s*(?<depName>[^\\s]+)',
+      ],
+      // fallback if neither chartName nor releaseName exists
+      depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{replace "^.*/" "" packageFileDir}}{{/if}}',
+      datasourceTemplate: 'docker',
+    }
   ],
   packageRules: [
     {

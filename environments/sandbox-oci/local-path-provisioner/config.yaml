@@ -1,5 +1,5 @@
 namespace: local-path-storage
-releaseName: local-path-provisioner
+releaseName: "."
 
 repoURL: oci://ghcr.io/rancher/local-path-provisioner/charts/local-path-provisioner
 targetRevision: 0.0.36

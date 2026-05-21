@@ -1,0 +1,48 @@
+# AppSet for custom apps that don't necessarily follow the pattern of the others.
+# Path structure is environments/<cluster>/<app>/config.yaml with namespace defined in config.yaml.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd-applications
+  namespace: argocd
+spec:
+  goTemplate: true
+  # goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/bkonicek/gitops
+        revision: HEAD
+        files:
+          - path: environments/*/*/config.yaml
+            exclude: true
+  template:
+    metadata:
+      name: "{{index .path.segments 1}}-{{.path.basenameNormalized}}"
+      labels:
+        app_name: "{{.path.basenameNormalized}}"
+        environment: "{{index .path.segments 1}}"
+    spec:
+      project: default
+      destination:
+        namespace: "{{ .namespace }}"
+        server: https://kubernetes.default.svc
+      source:
+        repoURL: https://github.com/bkonicek/gitops
+        targetRevision: '{{ .targetRevision | default "HEAD" }}'
+        path: "{{ .path.path }}"
+        helm:
+          releaseName: '{{ .releaseName | default (printf "%s-%s" (index .path.segments 1) .path.basenameNormalized) }}'
+          valueFiles:
+            - ../../../base/{{ default (printf "%s.yaml" .path.basenameNormalized) .baseValuesFile }}
+            - values.yaml
+          ignoreMissingValueFiles: true
+      syncPolicy:
+        automated:
+          prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+          selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+          allowEmpty: true # Allows deleting all application resources during automatic syncing ( false by default ).
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply={{ .serverSideApply | default "false"}}
+  syncPolicy:
+    preserveResourcesOnDeletion: true

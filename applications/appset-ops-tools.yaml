@@ -44,11 +44,11 @@ spec:
           {{- end }}
           helm:
             releaseName: >-
-              {{- if hasKey . "releaseName" -}}
+              {{ if hasKey . "releaseName" }}
                 {{ ternary .path.basenameNormalized .releaseName (eq .releaseName ".") }}
-              {{- else -}}
+              {{ else }}
                 {{ printf "%s-%s" (index .path.segments 1) .path.basenameNormalized }}
-              {{- end -}}
+              {{ end }}
             valueFiles:
               - $values/base/{{ printf "%s.yaml" .path.basenameNormalized }}
               - $values/{{ .path.path }}/values.yaml

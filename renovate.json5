@@ -29,7 +29,7 @@
     },
     {
       customType: 'regex',
-      description: 'ArgoCD config Helm charts'
+      description: 'ArgoCD config Helm charts',
       managerFilePatterns: [
         '/(^|/)config\\.ya?ml$/',
       ],

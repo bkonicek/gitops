@@ -9,5 +9,5 @@ resources:
 monitoring:
   podMonitorEnabled: true
   grafanaDashboard:
-    enabled: true
+    create: true
     namespace: monitoring

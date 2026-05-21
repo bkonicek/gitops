@@ -39,11 +39,15 @@ Application directories must contain a `config.yaml` file with the following str
 namespace: default
 
 # Optional Fields
+## Chart Source
 repoURL:        # defaults to this repo. If set to another repo, must be a valid Helm repository and requires `chartName` to be specified.
 targetRevision: # defaults to HEAD, for external charts should be the version
 chartName:      # defaults to the name of the directory, required if repoURL is set to an external Helm repository
 releaseName:    # defaults to the generated application name
 chartPath:      # defaults to "charts/<application directory name>". Ignored if using external Helm repository as `repoURL`.
+
+## Sync Options
+serverSideApply: # defaults to false
 ```
 
 Optionally, each application can have a `values.yaml` file in the same directory to set values for the Helm chart specific to that environment. If you want to set values that apply to all environnments, create a file in `base/` matching the name of the application directory, e.g. `base/metrics-server.yaml`.

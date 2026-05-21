@@ -39,8 +39,8 @@ spec:
       sources:
         - repoURL: '{{ .repoURL | default "https://github.com/bkonicek/gitops" }}'
           targetRevision: '{{ .targetRevision | default "HEAD" }}'
-          path: "charts/{{ .path.basenameNormalized }}"
-          {{- if and (hasKey . "repoURL") (ne .repoURL "https://github.com/bkonicek/gitops") }}
+          path: '{{ .chartPath | default (printf "charts/%s" .path.basenameNormalized) }}'
+          {{- if and (hasKey . "repoURL") (not (hasKey . "chartPath")) (ne .repoURL "https://github.com/bkonicek/gitops") }}
           chart: '{{ .chartName | default .path.basenameNormalized }}'
           {{- end }}
           helm:

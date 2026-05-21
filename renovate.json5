@@ -49,14 +49,12 @@
       ],
       matchStringsStrategy: 'combination',
       matchStrings: [
-        'repoURL:\\s*(?<registryUrl>oci://\\S+)',
-        'targetRevision:\\s*(?<currentValue>v?\\d+\\.\\d+\\.\\d+)',
-        'chartPath:\\s*(?<chartPath>[^\\s]+)',
+        'repoURL:\\s*oci://(?<registryUrl>\\S+)',
+        'targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)',
         '(?:chartName|releaseName):\\s*(?<depName>[^\\s]+)',
       ],
-      // fallback if neither chartName nor releaseName exists
-      depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{replace "^.*/" "" packageFileDir}}{{/if}}',
       datasourceTemplate: 'helm',
+      extractVersionTemplate: '{{registryUrl}}',
     },
   ],
   packageRules: [

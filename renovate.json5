@@ -41,21 +41,6 @@
       ],
       datasourceTemplate: 'helm',
     },
-    {
-      customType: 'regex',
-      description: 'OCI Helm charts',
-      managerFilePatterns: [
-        '/(^|/)config\\.ya?ml$/',
-      ],
-      matchStringsStrategy: 'combination',
-      matchStrings: [
-        'repoURL:\\s*oci://(?<registryUrl>\\S+)',
-        'targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)',
-        '(?:chartName|releaseName):\\s*(?<depName>[^\\s]+)',
-      ],
-      depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{replace "^.*/" "" packageFileDir}}{{/if}}',
-      datasourceTemplate: 'helm',
-    },
   ],
   packageRules: [
     {

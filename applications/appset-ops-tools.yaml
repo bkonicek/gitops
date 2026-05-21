@@ -43,7 +43,7 @@ spec:
           chart: '{{ .chartName | default .path.basenameNormalized }}'
           {{- end }}
           helm:
-            releaseName: '{{ .releaseName | default (printf "%s-%s" (index .path.segments 1) .path.basenameNormalized) }}'
+            releaseName: '{{ if hasKey . "releaseName" }}{{ if eq .releaseName "." }}{{ .path.basenameNormalized }}{{ else }}{{ .releaseName }}{{ end }}{{ else }}{{ printf "%s-%s" (index .path.segments 1) .path.basenameNormalized }}{{ end }}'
             valueFiles:
               - $values/base/{{ printf "%s.yaml" .path.basenameNormalized }}
               - $values/{{ .path.path }}/values.yaml

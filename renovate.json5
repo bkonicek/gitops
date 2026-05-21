@@ -30,7 +30,7 @@
     {
       customType: 'regex',
       managerFilePatterns: [
-        '/(^|\\/)(?<parentDir>[^\\/]+)\\/config\\.ya?ml$/',
+        '/(^|\\/)(?<depName>[^\\/]+)\\/config\\.ya?ml$/',
       ],
       matchStringsStrategy: 'combination',
       matchStrings: [
@@ -38,9 +38,8 @@
         'repoURL:\\s*(?<registryUrl>https?://[^\\s]+)',
         'chartName:\\s*(?<depName>[^\\s]+)',
       ],
-      depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{parentDir}}{{/if}}',
       datasourceTemplate: 'helm',
-    }
+    },
   ],
   packageRules: [
     {

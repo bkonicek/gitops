@@ -30,16 +30,17 @@
     {
       customType: 'regex',
       managerFilePatterns: [
-        '/(^|/)config\\.ya?ml$/',
+        '/(^|\\/)(?<parentDir>[^\\/]+)\\/config\\.ya?ml$/',
       ],
       matchStringsStrategy: 'combination',
       matchStrings: [
-        'targetRevision:\\s*(?<currentValue>[^\\s]+)',
+        'targetRevision:\\s*(?<currentValue>v?\\d+\\.\\d+\\.\\d+)',
         'repoURL:\\s*(?<registryUrl>https?://[^\\s]+)',
         'chartName:\\s*(?<depName>[^\\s]+)',
       ],
+      depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{parentDir}}{{/if}}',
       datasourceTemplate: 'helm',
-    },
+    }
   ],
   packageRules: [
     {

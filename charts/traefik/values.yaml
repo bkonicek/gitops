@@ -1,0 +1,21 @@
+traefik:
+  providers:
+    kubernetesIngressNGINX:
+      enabled: true
+    kubernetesCRD:
+      allowCrossNamespace: true
+  service:
+    spec:
+      externalTrafficPolicy: Local
+  metrics:
+    prometheus:
+      disableAPICheck: true
+      serviceMonitor:
+        enabled: true
+  ingressClass:
+    name: traefik
+  logs:
+    access:
+      enabled: true
+  additionalArguments:
+    - "--entrypoints.websecure.http.middlewares=traefik-default-headers@kubernetescrd"

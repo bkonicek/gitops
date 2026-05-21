@@ -1,2 +1,4 @@
 namespace: kube-system
-targetRevision: HEAD
+targetRevision: 2.18.5
+repoURL: https://bitnami-labs.github.io/sealed-secrets
+chartName: sealed-secrets

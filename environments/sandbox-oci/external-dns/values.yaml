@@ -1,38 +1,9 @@
 external-dns:
-  provider: cloudflare
-  policy: sync
-  sources:
-    - ingress
-    - crd
-  txtOwnerId: external-dns
-  env:
-    - name: CF_API_TOKEN
-      valueFrom:
-        secretKeyRef:
-          name: cf-dns
-          key: API_TOKEN
   extraArgs:
     - "--exclude-target-net=10.0.0.0/8"
-
-  serviceMonitor:
-    enabled: true
-
-# DNS zone
-dnsZone: benkonicek.com
-
+    
 # Create DNSEndpoint resources
 dnsEndpoints:
-  # YAML map of DNSEndpoints to create
-  # www:
-  #   # DNS record type
-  #   type: CNAME
-  #   # List of targets to point the record to
-  #   targets:
-  #     - example.com
-  #     # Enable proxying the record through cloudflare
-  #   proxy: true
-  #   # TTL for the record
-  #   ttl: 180
   blog:
     type: CNAME
     targets:

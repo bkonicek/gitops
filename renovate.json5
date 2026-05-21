@@ -53,8 +53,8 @@
         'targetRevision:\\s*(?<currentValue>\\d+\\.\\d+\\.\\d+)',
         '(?:chartName|releaseName):\\s*(?<depName>[^\\s]+)',
       ],
+      depNameTemplate: '{{#if depName}}{{depName}}{{else}}{{replace "^.*/" "" packageFileDir}}{{/if}}',
       datasourceTemplate: 'helm',
-      extractVersionTemplate: '{{registryUrl}}',
     },
   ],
   packageRules: [

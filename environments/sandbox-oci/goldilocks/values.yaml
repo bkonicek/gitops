@@ -11,6 +11,16 @@ controller:
   flags:
     on-by-default: true
     exclude-namespaces: kube-system,kube-public,kube-node-lease
+  rbac:
+    extraRules:
+      - apiGroups:
+        - "monitoring.coreos.com"
+        resources:
+        - "prometheuses"
+        verbs:
+        - "get"
+        - "list"
+        - "watch"
 
 dashboard:
   flags:

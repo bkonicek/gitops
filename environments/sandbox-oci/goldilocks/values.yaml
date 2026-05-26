@@ -1,0 +1,16 @@
+vpa:
+  enabled: true
+
+  recommender:
+    extraArgs:
+      prometheus-address: |
+        http://sandbox-oci-prometheus-ope-prometheus.monitoring.svc.cluster.local:9090
+      storage: prometheus
+
+controller:
+  flags:
+    on-by-default: true
+
+dashboard:
+  flags:
+    on-by-default: true

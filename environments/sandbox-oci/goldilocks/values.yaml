@@ -34,3 +34,15 @@ controller:
 dashboard:
   flags:
     on-by-default: true
+  rbac:
+    extraRules:
+      - apiGroups:
+        - "monitoring.coreos.com"
+        resources:
+        - "prometheuses"
+        - "alertmanagers"
+        verbs:
+        - "get"
+        - "list"
+        - "watch"
+

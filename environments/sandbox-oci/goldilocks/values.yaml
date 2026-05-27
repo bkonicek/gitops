@@ -17,6 +17,7 @@ controller:
         - "monitoring.coreos.com"
         resources:
         - "prometheuses"
+        - "alertmanagers"
         verbs:
         - "get"
         - "list"

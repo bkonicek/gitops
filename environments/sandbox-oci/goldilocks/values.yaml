@@ -1,6 +1,14 @@
 vpa:
   enabled: true
 
+  rbac:
+    create: true
+    extraRules:
+      vpaTargetReader:
+        - apiGroups: ["monitoring.coreos.com"]
+          resources: ["prometheuses", "servicemonitors", "podmonitors", "alertmanagers"] # Adjust resources based on your Prometheus Operator setup
+          verbs: ["get", "list", "watch"]
+
   recommender:
     extraArgs:
       prometheus-address: |

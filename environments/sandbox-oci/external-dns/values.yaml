@@ -10,10 +10,9 @@ dnsEndpoints:
       - bkonicek.github.io
     proxy: false
     ttl: 180
-  # unsupported naming format for DNSEndpoint resource currently
-  # _github-pages-challenge-bkonicek:
-  #   type: TXT
-  #   targets:
-  #     - "83f0bb0b77613304179af6b534e2d3"
-  #   proxy: false
-  #   ttl: 180
+  _github-pages-challenge-bkonicek:
+    type: TXT
+    targets:
+      - "83f0bb0b77613304179af6b534e2d3"
+    proxy: false
+    ttl: 180

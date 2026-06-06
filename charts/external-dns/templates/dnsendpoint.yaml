@@ -8,7 +8,12 @@ spec:
   - dnsName: {{ $name }}.{{ $.Values.dnsZone }}
     recordTTL: {{ $value.ttl }}
     recordType: {{ $value.type }}
-    targets: {{ toYaml $value.targets | nindent 6 }}
+    targets:{{- if eq $value.type "TXT" }}
+{{- range $t := $value.targets }}
+      - {{ printf "\"%s\"" $t | quote }}
+{{- end }}
+    {{- else }} {{ toYaml $value.targets | nindent 6 }}
+    {{- end }}
     {{- if $value.proxy }}
     providerSpecific:
       - name: external-dns.alpha.kubernetes.io/cloudflare-proxied

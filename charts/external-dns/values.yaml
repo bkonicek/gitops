@@ -1,6 +1,11 @@
 external-dns:
   provider: cloudflare
   policy: sync
+  managedRecordTypes:
+    - A
+    - AAAA
+    - CNAME
+    - TXT
   sources:
     - ingress
     - crd

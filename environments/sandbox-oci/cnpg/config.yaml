@@ -1,6 +1,6 @@
 namespace: cnpg-system
 repoURL: https://cloudnative-pg.github.io/charts
-targetRevision: 0.28.2
+targetRevision: 0.28.3
 chartName: cloudnative-pg
 releaseName: "."
 

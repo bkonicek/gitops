@@ -14,7 +14,7 @@ traefik:
         enabled: true
   ingressClass:
     name: traefik
-  accessLogs:
+  accessLog:
     enabled: true
   additionalArguments:
     - "--entrypoints.websecure.http.middlewares=traefik-default-headers@kubernetescrd"

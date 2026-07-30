@@ -1,0 +1,7 @@
+namespace: actual
+repoURL: https://community-charts.github.io/helm-charts
+targetRevision: 1.9.1
+chartName: actualbudget
+releaseName: "."
+
+serverSideApply: true

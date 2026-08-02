@@ -7,6 +7,7 @@ resources:
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.4.6/manifests/install.yaml
   - manifests/dex-okta-ca-cert-sealed-secret.yaml
   - manifests/dex-ingress.yaml
+  - manifests/service-application-controller-metrics.yaml
   - manifests/service-monitors.yaml
   - manifests/externalsecret-webhook.yaml
   - manifests/ingress-webhook.yaml

@@ -49,6 +49,22 @@ spec:
       app.kubernetes.io/name: argocd-applicationset-controller
   endpoints:
     - port: metrics
+      relabelings:
+        - targetLabel: job
+          replacement: argocd-applicationset-controller-metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-application-controller-metrics
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: argocd-application-controller-metrics
+  endpoints:
+    - port: metrics
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor

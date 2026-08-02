@@ -17,12 +17,6 @@ pihole:
     "cluster-autoscaler.kubernetes.io/safe-to-evict": "true"
   podDisruptionBudget:
     enabled: false
-  podDnsConfig:
-    enabled: true
-    policy: "None"
-    nameservers:
-      - 127.0.0.1
-      - 10.96.5.5 # in-cluster CoreDNS (kube-dns), reachable over UDP even though external UDP/53 egress is blocked
   # extraEnvVars:
   #   FTLCONF_dns_listeningMode: "all"
   # probes:

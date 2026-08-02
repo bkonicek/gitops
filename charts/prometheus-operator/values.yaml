@@ -51,9 +51,10 @@ kube-prometheus-stack:
         argocd:
           url: https://raw.githubusercontent.com/argoproj/argo-cd/master/examples/dashboard.json
           token: ""
-        ingress-nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/grafana/dashboards/nginx.json
-          token: ""
+        traefik:
+          gnetId: 17346
+          revision: 9
+          datasource: Prometheus
         external-dns:
           gnetId: 15038
           revision: 3

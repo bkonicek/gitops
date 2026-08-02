@@ -1,0 +1,7 @@
+pihole:
+  podDnsConfig:
+    enabled: true
+    policy: "None"
+    nameservers:
+      - 127.0.0.1
+      - 10.96.5.5 # in-cluster CoreDNS (kube-dns), reachable over UDP even though external UDP/53 egress is blocked

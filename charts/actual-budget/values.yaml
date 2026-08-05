@@ -1,17 +1,85 @@
+backup:
+  schedule: "0 3 */3 * *"
+  bucket: &backupBucket benkonicek-backups-us-ashburn-1
+  region: &backupRegion us-ashburn-1
+  objectName: &backupObjectName actual-budget/actualbudget-backup.tar.gz
+  ociCliImage: &ociCliImage ghcr.io/oracle/oci-cli:20260805
+  busyboxImage: &busyboxImage busybox:1.38
+
 actualbudget:
   image:
     repository: docker.io/actualbudget/actual-server
   persistence:
     enabled: true
     size: 4Gi
-
-backup:
-  schedule: "0 3 */3 * *"
-  bucket: benkonicek-backups-us-ashburn-1
-  region: us-ashburn-1
-  objectName: actual-budget/actualbudget-backup.tar.gz
-  ociCliImage: ghcr.io/oracle/oci-cli:20260805
-  busyboxImage: busybox:1.38
+  # Runs before the app container on every pod start. Each initContainer independently
+  # re-checks whether /data/user-files is empty, so this is a no-op on a normal restart
+  # and only kicks in right after a fresh/empty PVC (e.g. a lost/replaced node) - closing
+  # the gap where the app would otherwise auto-create a blank default budget and someone
+  # has to notice and manually run the restore Job. See docs/runbooks/actual-budget.md.
+  initContainers:
+    - name: download-backup-if-empty
+      image: *ociCliImage
+      env:
+        - name: REGION
+          value: *backupRegion
+        - name: BUCKET
+          value: *backupBucket
+        - name: OBJECT_NAME
+          value: *backupObjectName
+      command:
+        - sh
+        - -c
+        - |
+          set -eu
+          if [ -n "$(ls -A /data/user-files 2>/dev/null)" ]; then
+            echo "/data/user-files is non-empty, skipping auto-restore download"
+            exit 0
+          fi
+          NAMESPACE=$(oci os ns get --auth instance_principal --region "$REGION" --query data --raw-output)
+          if ! oci os object head --auth instance_principal --region "$REGION" \
+              --namespace "$NAMESPACE" --bucket-name "$BUCKET" --name "$OBJECT_NAME" >/dev/null 2>&1; then
+            echo "No existing backup object found, starting fresh instead of auto-restoring"
+            exit 0
+          fi
+          echo "/data/user-files is empty, downloading latest backup for auto-restore"
+          oci os object get --auth instance_principal --region "$REGION" \
+            --namespace "$NAMESPACE" --bucket-name "$BUCKET" --name "$OBJECT_NAME" \
+            --file /restore/actualbudget-backup.tar.gz
+          echo "Backup downloaded for auto-restore"
+      volumeMounts:
+        - name: data
+          mountPath: /data
+          readOnly: true
+        - name: restore
+          mountPath: /restore
+    - name: extract-backup-if-empty
+      image: *busyboxImage
+      command:
+        - sh
+        - -c
+        - |
+          set -eu
+          if [ -n "$(ls -A /data/user-files 2>/dev/null)" ]; then
+            echo "/data/user-files is non-empty, skipping auto-restore extract"
+            exit 0
+          fi
+          if [ ! -f /restore/actualbudget-backup.tar.gz ]; then
+            echo "No backup archive downloaded, leaving /data empty for a fresh start"
+            exit 0
+          fi
+          rm -rf /data/*
+          tar -xzf /restore/actualbudget-backup.tar.gz -C /data
+          echo "Auto-restored actualbudget data to /data on startup"
+      volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: restore
+          mountPath: /restore
+          readOnly: true
+  volumes:
+    - name: restore
+      emptyDir: {}
 
 alerting:
   enabled: true

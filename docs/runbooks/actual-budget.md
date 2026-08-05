@@ -77,25 +77,39 @@ kubectl delete pvc actualbudget-data -n actual
 ```
 
 ArgoCD's `selfHeal: true` sync policy then recreates the PVC from the chart automatically, and a
-fresh (empty) PV gets provisioned on whichever node the pod actually lands on. At that point,
-follow the [Restore](#restore) steps above to repopulate it from the latest backup — today this
-is a manual step you have to remember to do.
-
-## Future work
+fresh (empty) PV gets provisioned on whichever node the pod actually lands on. The actualbudget
+pod then auto-restores itself from the latest backup on startup (see
+[Auto-restore on pod startup](#auto-restore-on-pod-startup) below) — no manual restore step
+needed for this specific case anymore.
 
 ### Auto-restore on pod startup
 
-Planned improvement (not yet implemented): add an `initContainer` to the actualbudget
-`Deployment` itself (the upstream chart already exposes `initContainers: []` as a values hook)
-that runs the same "is `/data/user-files` empty?" check used by the backup guard, inverted — if
-empty, it automatically downloads and extracts the latest backup *before* the app container
-starts.
+Implemented: two `initContainers` on the actualbudget `Deployment`
+([`charts/actual-budget/values.yaml`](../../charts/actual-budget/values.yaml), via the upstream
+chart's `initContainers`/`volumes` values hooks) run the same "is `/data/user-files` empty?" check
+used by the backup guard, inverted — each independently re-checks the condition and no-ops on a
+normal restart, but if `/data` is genuinely empty (e.g. right after the `kubectl delete pvc` step
+above), the first downloads the latest backup from OCI Object Storage and the second extracts it
+over `/data` *before* the app container starts. If no backup object exists yet (e.g. a brand new
+deploy that's never been backed up), it logs that and leaves the volume empty for a fresh start
+rather than failing pod startup.
 
-This would close the gap in the recovery flow above: after `kubectl delete pvc`, the pod would
-restore itself on boot instead of starting with an empty database and waiting on a human to
-notice and trigger the restore Job. The `actualbudget-restore` CronJob would remain useful as a
-manual-override tool (e.g. restoring to recover from in-app data corruption, not just node loss),
-but would no longer be the primary recovery path.
+This closes the gap that used to exist here: after `kubectl delete pvc`, the pod now restores
+itself on boot instead of starting with an empty database and waiting on a human to notice and
+trigger the restore Job. The `actualbudget-restore` CronJob remains useful as a manual-override
+tool (e.g. restoring to recover from in-app data corruption, not just node loss), but is no longer
+the primary recovery path.
+
+One caveat found while testing this against a real node cycle: if the app container ever starts
+against an empty volume *before* a restore completes (e.g. during earlier manual testing, prior to
+this auto-restore existing), Actual Budget auto-creates a default "My Finances" budget and caches
+it locally in any browser that connects during that window. A later restore replaces the
+server-side data but doesn't clean up that stale browser-local reference, so it can appear
+alongside the real restored budget in the Files list. It's cosmetic (not server-side duplicate
+data) and safe to remove via the file's `⋮` menu in the UI, or avoided entirely by not connecting
+a client during the empty-volume window — which the auto-restore above eliminates going forward.
+
+## Future work
 
 Deliberately **not** planned: an automated controller to detect the stuck-`Pending` state and
 delete the stale PVC itself. Kubernetes has no built-in primitive for this, cluster-autoscaler

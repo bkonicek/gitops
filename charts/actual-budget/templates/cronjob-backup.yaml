@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: actualbudget-backup
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          initContainers:
+            - name: tar-data
+              image: {{ .Values.backup.busyboxImage }}
+              command:
+                - sh
+                - -c
+                - tar -czf /backup/actualbudget-backup.tar.gz -C /data .
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  readOnly: true
+                - name: backup
+                  mountPath: /backup
+          containers:
+            - name: upload
+              image: {{ .Values.backup.ociCliImage }}
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  NAMESPACE=$(oci os ns get --auth instance_principal --region {{ .Values.backup.region }} --query data --raw-output)
+                  oci os object put --auth instance_principal --region {{ .Values.backup.region }} \
+                    --namespace "$NAMESPACE" \
+                    --bucket-name {{ .Values.backup.bucket }} \
+                    --name {{ .Values.backup.objectName }} \
+                    --file /backup/actualbudget-backup.tar.gz \
+                    --force
+              volumeMounts:
+                - name: backup
+                  mountPath: /backup
+                  readOnly: true
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-data
+            - name: backup
+              emptyDir: {}

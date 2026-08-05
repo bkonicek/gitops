@@ -68,7 +68,13 @@ Because storage is node-pinned (see [Storage](#storage) above), if the node back
 `actualbudget-data` is deleted (node pool cycling, manual replacement, hardware failure), the
 PV's `nodeAffinity` points at a node that no longer exists. The PVC stays `Bound` — Kubernetes
 does not detect or heal this on its own — so the actualbudget pod sits `Pending` indefinitely
-(`0/N nodes are available: node(s) didn't match Pod's node affinity`).
+(`0/N nodes are available: node(s) didn't match Pod's node affinity`). You'll know this is
+happening because
+[`charts/actual-budget/templates/prometheusrule.yaml`](../../charts/actual-budget/templates/prometheusrule.yaml)
+fires `ActualBudgetDeploymentUnavailable` once the Deployment has had zero available replicas for
+more than `alerting.unavailableFor` (default `5m`), surfacing as a Slack message in `#alerts`
+instead of relying on someone noticing the app is down — see
+[`docs/runbooks/alerting.md`](alerting.md) for how that routing works.
 
 Recovery is a single manual step, since the default StorageClass uses `reclaimPolicy: Delete`:
 
@@ -77,25 +83,29 @@ kubectl delete pvc actualbudget-data -n actual
 ```
 
 ArgoCD's `selfHeal: true` sync policy then recreates the PVC from the chart automatically, and a
-fresh (empty) PV gets provisioned on whichever node the pod actually lands on. At that point,
-follow the [Restore](#restore) steps above to repopulate it from the latest backup — today this
-is a manual step you have to remember to do.
+fresh (empty) PV gets provisioned on whichever node the pod actually lands on. From there, the pod
+restores itself automatically: two `initContainers` on the actualbudget `Deployment`
+([`charts/actual-budget/values.yaml`](../../charts/actual-budget/values.yaml), via the upstream
+chart's `initContainers`/`volumes` values hooks) run the same "is `/data/user-files` empty?" check
+used by the backup guard, inverted — each independently re-checks the condition and no-ops on a
+normal restart, but since `/data` is genuinely empty here, the first downloads the latest backup
+from OCI Object Storage and the second extracts it over `/data` *before* the app container starts.
+No manual restore trigger needed for this case — the `actualbudget-restore` CronJob remains
+available as a manual-override tool (e.g. restoring to recover from in-app data corruption, not
+just node loss), but is no longer the primary recovery path. If no backup object exists yet (e.g.
+a brand new deploy that's never been backed up), the initContainers log that and leave the volume
+empty for a fresh start rather than failing pod startup.
+
+One caveat found while testing this against a real node cycle: if the app container ever starts
+against an empty volume *before* a restore completes (e.g. during manual testing, or before this
+auto-restore existed), Actual Budget auto-creates a default "My Finances" budget and caches it
+locally in any browser that connects during that window. A later restore replaces the server-side
+data but doesn't clean up that stale browser-local reference, so it can appear alongside the real
+restored budget in the Files list. It's cosmetic (not server-side duplicate data) and safe to
+remove via the file's `⋮` menu in the UI — and avoided going forward since the auto-restore above
+means the app never actually runs against an empty volume that a client could connect to first.
 
 ## Future work
-
-### Auto-restore on pod startup
-
-Planned improvement (not yet implemented): add an `initContainer` to the actualbudget
-`Deployment` itself (the upstream chart already exposes `initContainers: []` as a values hook)
-that runs the same "is `/data/user-files` empty?" check used by the backup guard, inverted — if
-empty, it automatically downloads and extracts the latest backup *before* the app container
-starts.
-
-This would close the gap in the recovery flow above: after `kubectl delete pvc`, the pod would
-restore itself on boot instead of starting with an empty database and waiting on a human to
-notice and trigger the restore Job. The `actualbudget-restore` CronJob would remain useful as a
-manual-override tool (e.g. restoring to recover from in-app data corruption, not just node loss),
-but would no longer be the primary recovery path.
 
 Deliberately **not** planned: an automated controller to detect the stuck-`Pending` state and
 delete the stale PVC itself. Kubernetes has no built-in primitive for this, cluster-autoscaler
@@ -103,12 +113,3 @@ already defaults to not evicting pods with local-path PVCs (so this only happens
 events, not routine autoscaler churn), and a real watch-loop controller (plus RBAC) is a lot of
 surface area for something this infrequent and already a single manual `kubectl delete pvc` away
 from fixed.
-
-### Alerting on pod pending/unavailable
-
-Implemented: [`charts/actual-budget/templates/prometheusrule.yaml`](../../charts/actual-budget/templates/prometheusrule.yaml)
-fires `ActualBudgetDeploymentUnavailable` when the actualbudget `Deployment` has had zero
-available replicas for more than `alerting.unavailableFor` (default `5m`), so a lost/replaced node
-surfaces as a Slack message in `#alerts` instead of relying on someone noticing the app is down.
-See [`docs/runbooks/alerting.md`](alerting.md) for how the Slack routing and the PrometheusRule
-convention work, and for the pattern to follow when adding alerts for other apps.

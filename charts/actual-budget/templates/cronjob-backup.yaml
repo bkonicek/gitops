@@ -33,6 +33,7 @@ spec:
                     exit 1
                   fi
                   tar -czf /backup/actualbudget-backup.tar.gz -C /data .
+                  echo "Created backup archive /backup/actualbudget-backup.tar.gz"
               volumeMounts:
                 - name: data
                   mountPath: /data
@@ -54,6 +55,11 @@ spec:
                     --name {{ .Values.backup.objectName }} \
                     --file /backup/actualbudget-backup.tar.gz \
                     --force
+                  if [ $? -ne 0 ]; then
+                    echo "Backup upload failed" >&2
+                    exit 1
+                  fi
+                  echo "Backup successfully uploaded to OCI Object Storage"
               volumeMounts:
                 - name: backup
                   mountPath: /backup

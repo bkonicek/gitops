@@ -33,6 +33,11 @@ spec:
                     --bucket-name {{ .Values.backup.bucket }} \
                     --name {{ .Values.backup.objectName }} \
                     --file /restore/actualbudget-backup.tar.gz
+                  if [ $? -ne 0 ]; then
+                    echo "Backup download failed" >&2
+                    exit 1
+                  fi
+                  echo "Backup successfully downloaded from OCI Object Storage"
               volumeMounts:
                 - name: restore
                   mountPath: /restore
@@ -46,6 +51,7 @@ spec:
                   set -eu
                   rm -rf /data/*
                   tar -xzf /restore/actualbudget-backup.tar.gz -C /data
+                  echo "Successfully restored actualbudget data to /data"
               volumeMounts:
                 - name: data
                   mountPath: /data

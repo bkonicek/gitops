@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: actualbudget-restore
+spec:
+  # Never runs on a schedule -- suspend: true keeps this permanently inert. Trigger a restore
+  # manually with:
+  #   kubectl create job --from=cronjob/actualbudget-restore -n {{ .Release.Namespace }} manual-restore
+  # Scale the actualbudget Deployment to 0 replicas first so the restore doesn't race with the
+  # running server writing to the same volume. This replaces the entire contents of /data.
+  schedule: "0 0 * * *"
+  suspend: true
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          initContainers:
+            - name: download
+              image: {{ .Values.backup.ociCliImage }}
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  NAMESPACE=$(oci os ns get --auth instance_principal --region {{ .Values.backup.region }} --query data --raw-output)
+                  oci os object get --auth instance_principal --region {{ .Values.backup.region }} \
+                    --namespace "$NAMESPACE" \
+                    --bucket-name {{ .Values.backup.bucket }} \
+                    --name {{ .Values.backup.objectName }} \
+                    --file /restore/actualbudget-backup.tar.gz
+              volumeMounts:
+                - name: restore
+                  mountPath: /restore
+          containers:
+            - name: extract
+              image: {{ .Values.backup.busyboxImage }}
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  rm -rf /data/*
+                  tar -xzf /restore/actualbudget-backup.tar.gz -C /data
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                - name: restore
+                  mountPath: /restore
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-data
+            - name: restore
+              emptyDir: {}

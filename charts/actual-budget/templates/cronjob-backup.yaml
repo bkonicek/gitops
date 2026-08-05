@@ -21,11 +21,15 @@ spec:
                 - -c
                 - |
                   set -eu
-                  # account.sqlite only exists once the server has actually been initialized.
+                  # user-files only gets entries once a budget has actually synced (each is
+                  # written as file-<id>.blob by the sync-upload endpoint). account.sqlite is
+                  # NOT a reliable signal here -- actual-server lazily creates it on the first
+                  # request that touches account state (e.g. the frontend's bootstrap-status
+                  # check on load), so it exists within seconds of a fresh empty volume too.
                   # Refuse to back up (and overwrite the remote backup) an empty/uninitialized
                   # volume, e.g. right after a node replacement recreates the PV from scratch.
-                  if [ ! -s /data/server-files/account.sqlite ]; then
-                    echo "Refusing to back up: /data/server-files/account.sqlite is missing or empty, data volume looks uninitialized." >&2
+                  if [ -z "$(ls -A /data/user-files 2>/dev/null)" ]; then
+                    echo "Refusing to back up: /data/user-files is empty, data volume looks uninitialized (no budget files yet)." >&2
                     exit 1
                   fi
                   tar -czf /backup/actualbudget-backup.tar.gz -C /data .

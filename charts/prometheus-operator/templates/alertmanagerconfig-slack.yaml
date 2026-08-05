@@ -1,3 +1,17 @@
+{{/*
+Alertmanager evaluates {{ }} in slackConfigs.text/title itself, at notification
+time, using its own Go templates (Annotations/Labels per alert) - not Helm.
+Since this file is also a Helm template, any such syntax written literally
+would get evaluated (or error) at `helm template` time instead. Backtick
+raw-string it into a variable so Helm treats it as an opaque string and only
+Alertmanager ever parses the {{ }} inside it.
+*/}}
+{{- $slackText := `{{ range .Alerts }}
+*Summary:* {{ .Annotations.summary }}
+*Description:* {{ .Annotations.description }}
+*Severity:* {{ .Labels.severity }}
+{{ if .Annotations.runbook_url }}*Runbook:* {{ .Annotations.runbook_url }}
+{{ end }}{{ end }}` -}}
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
@@ -25,6 +39,7 @@ spec:
       slackConfigs:
         - channel: {{ .Values.alerting.slack.channel | quote }}
           sendResolved: true
+          text: {{ $slackText | quote }}
           apiURL:
             name: {{ .Values.alerting.slack.secretName | quote }}
             key: {{ .Values.alerting.slack.secretKey | quote }}

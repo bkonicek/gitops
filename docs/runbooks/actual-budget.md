@@ -25,19 +25,12 @@ every 3 days (`backup.schedule` in [`values.yaml`](../../charts/actual-budget/va
    instead of uploading a near-empty archive. (`account.sqlite` was deliberately **not** used
    for this check — `actual-server` creates it lazily on the first request that touches account
    state, so it exists within seconds of a fresh empty volume, before any real budget data does.)
-2. An `oci-cli` container (`ghcr.io/oracle/oci-cli`, credential-less via
-   `--auth instance_principal`, using the OKE nodes' dynamic-group IAM permissions) uploads the
-   tarball to `benkonicek-backups-us-ashburn-1` under a **fixed object name**
+2. An `oci-cli` container (`ghcr.io/oracle/oci-cli`) uploads the tarball to
+   `benkonicek-backups-us-ashburn-1` under a **fixed object name**
    (`actual-budget/actualbudget-backup.tar.gz`), overwriting the previous backup each run.
 
 Retention is handled entirely on the OCI side: the bucket has versioning enabled with a 30-day
 lifecycle policy on old versions, so there's no pruning logic in the CronJob itself.
-
-Auth is set up in [`terraform/oci/sandbox/iam.tf`](https://github.com/bkonicek/terraform) — the
-`oke-dyn-group-all` dynamic group matches nodes via a custom defined tag (`oke.node=true`,
-applied to the node pool's `node_config_details`), and the `oke-backups-bucket-access` policy
-grants it `manage objects` (not `use` — `OBJECT_CREATE`, needed the first time an object name is
-written, is only granted at the `manage` tier) scoped to that one bucket.
 
 To check backup history:
 

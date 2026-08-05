@@ -1,0 +1,24 @@
+{{- if .Values.alerting.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: actual-budget
+spec:
+  groups:
+    - name: actual-budget
+      rules:
+        - alert: ActualBudgetDeploymentUnavailable
+          expr: |
+            kube_deployment_status_replicas_available{namespace="{{ .Release.Namespace }}", deployment="{{ .Values.alerting.deploymentName }}"} == 0
+          for: {{ .Values.alerting.unavailableFor }}
+          labels:
+            severity: {{ .Values.alerting.severity | quote }}
+          annotations:
+            summary: "actualbudget deployment has zero available replicas"
+            description: >-
+              The actualbudget Deployment in namespace {{ .Release.Namespace }} has had 0 available
+              replicas for more than {{ .Values.alerting.unavailableFor }}. This often means a node
+              holding the local-path PV was lost or replaced and the pod is stuck Pending on stale
+              node affinity - see the runbook.
+            runbook_url: {{ .Values.alerting.runbookUrl | quote }}
+{{- end }}

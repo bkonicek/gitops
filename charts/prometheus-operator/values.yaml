@@ -1,8 +1,23 @@
+alerting:
+  slack:
+    channel: "#alerts"
+    receiverName: slack-alerts
+    secretStore:
+      secretName: alertmanager-slack-webhook
+    secretName: alertmanager-secrets
+    secretKey: slack_api_url
+
 kube-prometheus-stack:
   prometheus:
     prometheusSpec:
       serviceMonitorSelectorNilUsesHelmValues: false
       podMonitorSelectorNilUsesHelmValues: false
+      ruleSelectorNilUsesHelmValues: false
+
+  alertmanager:
+    alertmanagerSpec:
+      alertmanagerConfiguration:
+        name: alertmanager-global-config
 
   grafana:
     service:

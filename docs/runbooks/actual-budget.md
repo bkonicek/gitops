@@ -106,16 +106,9 @@ from fixed.
 
 ### Alerting on pod pending/unavailable
 
-Planned improvement (not yet implemented): right now, discovering the stuck-`Pending` state
-described above relies on someone noticing (e.g. opening the app and finding it down). Add a
-`PrometheusRule` — `prometheus-operator` (`kube-prometheus-stack`) is already deployed cluster-wide
-— that fires when the actualbudget `Deployment` has zero available replicas for longer than a
-few minutes, so a lost/replaced node surfaces as an alert instead of silence.
-
-Two things to confirm/resolve as part of that work:
-- `kube-prometheus-stack`'s bundled default rules (`KubePodNotReady`,
-  `KubeDeploymentReplicasMismatch`, etc.) may already cover this generically — check whether one
-  of those already fires for this pod before adding a dedicated rule.
-- There's no Alertmanager receiver configured in this repo yet (no Slack/email/etc. route), so an
-  alert would currently only be visible in the Alertmanager/Grafana UI, not actively pushed
-  anywhere. Detection without a notification channel doesn't fully close the gap.
+Implemented: [`charts/actual-budget/templates/prometheusrule.yaml`](../../charts/actual-budget/templates/prometheusrule.yaml)
+fires `ActualBudgetDeploymentUnavailable` when the actualbudget `Deployment` has had zero
+available replicas for more than `alerting.unavailableFor` (default `5m`), so a lost/replaced node
+surfaces as a Slack message in `#alerts` instead of relying on someone noticing the app is down.
+See [`docs/runbooks/alerting.md`](alerting.md) for how the Slack routing and the PrometheusRule
+convention work, and for the pattern to follow when adding alerts for other apps.

@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager-global-config
+spec:
+  route:
+    receiver: "null"
+    groupBy: ["alertname", "namespace"]
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 4h
+    routes:
+      # kube-prometheus-stack's synthetic heartbeat alert - route it to null or it
+      # pages Slack every repeatInterval forever.
+      - receiver: "null"
+        matchers:
+          - name: alertname
+            value: Watchdog
+            matchType: "="
+      - receiver: {{ .Values.alerting.slack.receiverName | quote }}
+        continue: false
+  receivers:
+    - name: "null"
+    - name: {{ .Values.alerting.slack.receiverName | quote }}
+      slackConfigs:
+        - channel: {{ .Values.alerting.slack.channel | quote }}
+          sendResolved: true
+          apiURL:
+            name: {{ .Values.alerting.slack.secretName | quote }}
+            key: {{ .Values.alerting.slack.secretKey | quote }}
+  inhibitRules:
+    - sourceMatch:
+        - name: severity
+          value: critical
+          matchType: "="
+      targetMatch:
+        - name: severity
+          value: warning
+          matchType: "="
+      equal: ["alertname", "namespace"]

@@ -12,3 +12,10 @@ backup:
   objectName: actual-budget/actualbudget-backup.tar.gz
   ociCliImage: ghcr.io/oracle/oci-cli:20260805
   busyboxImage: busybox:1.38
+
+alerting:
+  enabled: true
+  deploymentName: actualbudget
+  unavailableFor: 5m
+  severity: critical
+  runbookUrl: https://github.com/bkonicek/gitops/blob/main/docs/runbooks/actual-budget.md#recovering-from-a-lost-or-replaced-node

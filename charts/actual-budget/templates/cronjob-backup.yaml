@@ -19,7 +19,16 @@ spec:
               command:
                 - sh
                 - -c
-                - tar -czf /backup/actualbudget-backup.tar.gz -C /data .
+                - |
+                  set -eu
+                  # account.sqlite only exists once the server has actually been initialized.
+                  # Refuse to back up (and overwrite the remote backup) an empty/uninitialized
+                  # volume, e.g. right after a node replacement recreates the PV from scratch.
+                  if [ ! -s /data/server-files/account.sqlite ]; then
+                    echo "Refusing to back up: /data/server-files/account.sqlite is missing or empty, data volume looks uninitialized." >&2
+                    exit 1
+                  fi
+                  tar -czf /backup/actualbudget-backup.tar.gz -C /data .
               volumeMounts:
                 - name: data
                   mountPath: /data

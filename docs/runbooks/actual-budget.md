@@ -81,7 +81,9 @@ fresh (empty) PV gets provisioned on whichever node the pod actually lands on. A
 follow the [Restore](#restore) steps above to repopulate it from the latest backup — today this
 is a manual step you have to remember to do.
 
-## Future work: auto-restore on pod startup
+## Future work
+
+### Auto-restore on pod startup
 
 Planned improvement (not yet implemented): add an `initContainer` to the actualbudget
 `Deployment` itself (the upstream chart already exposes `initContainers: []` as a values hook)
@@ -101,3 +103,19 @@ already defaults to not evicting pods with local-path PVCs (so this only happens
 events, not routine autoscaler churn), and a real watch-loop controller (plus RBAC) is a lot of
 surface area for something this infrequent and already a single manual `kubectl delete pvc` away
 from fixed.
+
+### Alerting on pod pending/unavailable
+
+Planned improvement (not yet implemented): right now, discovering the stuck-`Pending` state
+described above relies on someone noticing (e.g. opening the app and finding it down). Add a
+`PrometheusRule` — `prometheus-operator` (`kube-prometheus-stack`) is already deployed cluster-wide
+— that fires when the actualbudget `Deployment` has zero available replicas for longer than a
+few minutes, so a lost/replaced node surfaces as an alert instead of silence.
+
+Two things to confirm/resolve as part of that work:
+- `kube-prometheus-stack`'s bundled default rules (`KubePodNotReady`,
+  `KubeDeploymentReplicasMismatch`, etc.) may already cover this generically — check whether one
+  of those already fires for this pod before adding a dedicated rule.
+- There's no Alertmanager receiver configured in this repo yet (no Slack/email/etc. route), so an
+  alert would currently only be visible in the Alertmanager/Grafana UI, not actively pushed
+  anywhere. Detection without a notification channel doesn't fully close the gap.

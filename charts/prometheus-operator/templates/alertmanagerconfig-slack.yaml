@@ -23,6 +23,14 @@ spec:
           - name: alertname
             value: Watchdog
             matchType: "="
+      # Another synthetic alert, always active whenever a severity=info alert exists in a
+      # namespace - it exists only so the inhibitRule below can use it as a source to keep
+      # info-level alerts quiet by default. Never meant to be seen by a human.
+      - receiver: "null"
+        matchers:
+          - name: alertname
+            value: InfoInhibitor
+            matchType: "="
       - receiver: {{ .Values.alerting.slack.receiverName | quote }}
         continue: false
   receivers:
@@ -45,3 +53,14 @@ spec:
           value: warning
           matchType: "="
       equal: ["alertname", "namespace"]
+    # Pairs with the InfoInhibitor route above - keeps severity=info alerts quiet by default,
+    # only surfacing them once a real warning/critical fires in the same namespace too.
+    - sourceMatch:
+        - name: alertname
+          value: InfoInhibitor
+          matchType: "="
+      targetMatch:
+        - name: severity
+          value: info
+          matchType: "="
+      equal: ["namespace"]

@@ -12,11 +12,7 @@ actualbudget:
   persistence:
     enabled: true
     size: 4Gi
-  # Runs before the app container on every pod start. Each initContainer independently
-  # re-checks whether /data/user-files is empty, so this is a no-op on a normal restart
-  # and only kicks in right after a fresh/empty PVC (e.g. a lost/replaced node) - closing
-  # the gap where the app would otherwise auto-create a blank default budget and someone
-  # has to notice and manually run the restore Job. See docs/runbooks/actual-budget.md.
+  # Auto-restore from backup if /data/user-files is empty. See docs/runbooks/actual-budget.md.
   initContainers:
     - name: download-backup-if-empty
       image: *ociCliImage

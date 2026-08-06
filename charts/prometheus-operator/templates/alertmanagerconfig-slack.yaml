@@ -16,16 +16,13 @@ spec:
     groupInterval: 5m
     repeatInterval: 4h
     routes:
-      # kube-prometheus-stack's synthetic heartbeat alert - route it to null or it
-      # pages Slack every repeatInterval forever.
+      # Synthetic heartbeat alert - would page every repeatInterval otherwise.
       - receiver: "null"
         matchers:
           - name: alertname
             value: Watchdog
             matchType: "="
-      # Another synthetic alert, always active whenever a severity=info alert exists in a
-      # namespace - it exists only so the inhibitRule below can use it as a source to keep
-      # info-level alerts quiet by default. Never meant to be seen by a human.
+      # Synthetic alert, used only as an inhibition source below.
       - receiver: "null"
         matchers:
           - name: alertname
@@ -43,10 +40,7 @@ spec:
           apiURL:
             name: {{ .Values.alerting.slack.secretName | quote }}
             key: {{ .Values.alerting.slack.secretKey | quote }}
-  # This replicates kube-prometheus-stack's own default inhibit_rules (see `helm show values
-  # prometheus-community/kube-prometheus-stack` -> alertmanager.config.inhibit_rules) - lost
-  # when we took over the whole config via a custom AlertmanagerConfig, so reproduced here
-  # deliberately rather than by accident. See docs/runbooks/alerting.md for how to check this.
+  # Replicates kube-prometheus-stack's default inhibit_rules - see docs/runbooks/alerting.md.
   inhibitRules:
     - sourceMatch:
         - name: severity
@@ -66,8 +60,7 @@ spec:
           value: info
           matchType: "="
       equal: ["alertname", "namespace"]
-    # Pairs with the InfoInhibitor route above - keeps severity=info alerts quiet by default,
-    # only surfacing them once a real warning/critical fires in the same namespace too.
+    # Keeps severity=info alerts quiet unless a real warning/critical also fires.
     - sourceMatch:
         - name: alertname
           value: InfoInhibitor
@@ -77,8 +70,7 @@ spec:
           value: info
           matchType: "="
       equal: ["namespace"]
-    # Backstop: any other firing alert suppresses InfoInhibitor itself, so it never leaks
-    # through even in edge cases the null route above doesn't catch.
+    # Backstop: anything firing suppresses InfoInhibitor itself.
     - targetMatch:
         - name: alertname
           value: InfoInhibitor

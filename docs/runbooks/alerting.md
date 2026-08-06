@@ -27,6 +27,61 @@ inline in a values block is what makes that possible.
 There's nothing to configure per-app to get an alert routed to Slack — any
 `PrometheusRule` that fires, fires into this one route automatically.
 
+## Editing the AlertmanagerConfig itself
+
+This is different from adding a `PrometheusRule` (below) — most people will
+never need to touch `alertmanagerconfig-slack.yaml` itself. This section is
+for when you do.
+
+Setting `alertmanagerConfiguration.name` to point at our own `AlertmanagerConfig`
+means we **fully replace** `kube-prometheus-stack`'s own default routing and
+inhibition, not extend it. Out of the box (i.e. if you never touch
+`alertmanager.config` at all), the chart ships with:
+
+```
+helm show values prometheus-community/kube-prometheus-stack | less
+# search for "alertmanager:" -> "config:"
+```
+
+which is worth actually running before changing this file — it's the ground
+truth for what "sane defaults" means here, and the reference this file's
+`route`/`inhibitRules` are deliberately reproducing. The two load-bearing
+things it revealed, that aren't obvious from first principles:
+
+- **The chart's own default root receiver is `null`.** Out of the box, nothing
+  gets a real notification at all — the only reason `Watchdog` gets an
+  explicit null route in the default config is that it needs one *regardless*
+  of what the root receiver is (it fires forever, every `repeat_interval`).
+  Everything else silently falls through to the same null default. The moment
+  *we* add a real catch-all receiver (`slack-alerts`), every previously
+  invisible-by-default alert becomes visible unless explicitly excluded again
+  — which is exactly what bit us with `InfoInhibitor`.
+- **`inhibit_rules` has 4 entries by default**, not just the obvious
+  critical-suppresses-warning one — two of them exist purely to keep the
+  synthetic `Watchdog`/`InfoInhibitor` alerts (see below) from ever being
+  useful *targets* of a real notification. Diff this file's `inhibitRules`
+  against that reference whenever you touch either.
+
+**How to find "plumbing" alerts that need a null route**, like `Watchdog` and
+`InfoInhibitor`: query Prometheus's rules API and look for `type: alerting`
+rules whose `severity` label isn't `critical`/`warning`/`info`:
+
+```
+kubectl port-forward -n monitoring svc/sandbox-oci-prometheus-ope-prometheus 9090:9090 &
+curl -s localhost:9090/api/v1/rules | jq -r '
+  .data.groups[].rules[]
+  | select(.type == "alerting" and (.labels.severity as $s | ["critical","warning","info"] | index($s) | not))
+  | "\(.name) | severity: \(.labels.severity)"'
+```
+
+(Filtering on `type == "alerting"` matters — recording rules also show up in
+this API and also lack a `severity` label, but they never produce alerts at
+all, so they're not relevant here.) As of writing this only turns up
+`Watchdog` and `InfoInhibitor`, both from the bundled `general.rules` group —
+if `kube-prometheus-stack` ever ships another one, or you enable additional
+default rule groups, this is how to notice before it pages you unexpectedly
+instead of after.
+
 ## Adding a PrometheusRule for an app
 
 **Where it goes:** as a template in that app's own chart, at

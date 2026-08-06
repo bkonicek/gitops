@@ -43,6 +43,10 @@ spec:
           apiURL:
             name: {{ .Values.alerting.slack.secretName | quote }}
             key: {{ .Values.alerting.slack.secretKey | quote }}
+  # This replicates kube-prometheus-stack's own default inhibit_rules (see `helm show values
+  # prometheus-community/kube-prometheus-stack` -> alertmanager.config.inhibit_rules) - lost
+  # when we took over the whole config via a custom AlertmanagerConfig, so reproduced here
+  # deliberately rather than by accident. See docs/runbooks/alerting.md for how to check this.
   inhibitRules:
     - sourceMatch:
         - name: severity
@@ -50,7 +54,16 @@ spec:
           matchType: "="
       targetMatch:
         - name: severity
+          value: "warning|info"
+          matchType: "=~"
+      equal: ["alertname", "namespace"]
+    - sourceMatch:
+        - name: severity
           value: warning
+          matchType: "="
+      targetMatch:
+        - name: severity
+          value: info
           matchType: "="
       equal: ["alertname", "namespace"]
     # Pairs with the InfoInhibitor route above - keeps severity=info alerts quiet by default,
@@ -64,3 +77,9 @@ spec:
           value: info
           matchType: "="
       equal: ["namespace"]
+    # Backstop: any other firing alert suppresses InfoInhibitor itself, so it never leaks
+    # through even in edge cases the null route above doesn't catch.
+    - targetMatch:
+        - name: alertname
+          value: InfoInhibitor
+          matchType: "="

@@ -16,12 +16,17 @@ spec:
     groupInterval: 5m
     repeatInterval: 4h
     routes:
-      # kube-prometheus-stack's synthetic heartbeat alert - route it to null or it
-      # pages Slack every repeatInterval forever.
+      # Synthetic heartbeat alert - would page every repeatInterval otherwise.
       - receiver: "null"
         matchers:
           - name: alertname
             value: Watchdog
+            matchType: "="
+      # Synthetic alert, used only as an inhibition source below.
+      - receiver: "null"
+        matchers:
+          - name: alertname
+            value: InfoInhibitor
             matchType: "="
       - receiver: {{ .Values.alerting.slack.receiverName | quote }}
         continue: false
@@ -35,6 +40,7 @@ spec:
           apiURL:
             name: {{ .Values.alerting.slack.secretName | quote }}
             key: {{ .Values.alerting.slack.secretKey | quote }}
+  # Replicates kube-prometheus-stack's default inhibit_rules - see docs/runbooks/alerting.md.
   inhibitRules:
     - sourceMatch:
         - name: severity
@@ -42,6 +48,30 @@ spec:
           matchType: "="
       targetMatch:
         - name: severity
+          value: "warning|info"
+          matchType: "=~"
+      equal: ["alertname", "namespace"]
+    - sourceMatch:
+        - name: severity
           value: warning
           matchType: "="
+      targetMatch:
+        - name: severity
+          value: info
+          matchType: "="
       equal: ["alertname", "namespace"]
+    # Keeps severity=info alerts quiet unless a real warning/critical also fires.
+    - sourceMatch:
+        - name: alertname
+          value: InfoInhibitor
+          matchType: "="
+      targetMatch:
+        - name: severity
+          value: info
+          matchType: "="
+      equal: ["namespace"]
+    # Backstop: anything firing suppresses InfoInhibitor itself.
+    - targetMatch:
+        - name: alertname
+          value: InfoInhibitor
+          matchType: "="

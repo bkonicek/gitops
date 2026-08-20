@@ -1,4 +1,4 @@
 namespace: kube-system
-targetRevision: 2.19.2
+targetRevision: 2.19.3
 repoURL: https://bitnami.github.io/sealed-secrets
 chartName: sealed-secrets

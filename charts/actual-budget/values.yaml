@@ -3,7 +3,7 @@ backup:
   bucket: &backupBucket benkonicek-backups-us-ashburn-1
   region: &backupRegion us-ashburn-1
   objectName: &backupObjectName actual-budget/actualbudget-backup.tar.gz
-  ociCliImage: &ociCliImage ghcr.io/oracle/oci-cli:20260819
+  ociCliImage: &ociCliImage ghcr.io/oracle/oci-cli:20260826
   busyboxImage: &busyboxImage busybox:1.38
 
 actualbudget:

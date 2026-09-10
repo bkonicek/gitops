@@ -1,0 +1,5 @@
+namespace: group-wishlist
+targetRevision: HEAD
+releaseName: "."
+
+serverSideApply: true

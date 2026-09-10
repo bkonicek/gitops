@@ -1,0 +1,11 @@
+# POC database: single instance, minimal storage, no backups, no monitoring overhead.
+fullnameOverride: group-wishlist-db
+
+cluster:
+  storage:
+    size: 1Gi
+  monitoring:
+    enablePodMonitor: false
+  bootstrap:
+    database: wishlist
+    owner: wishlist

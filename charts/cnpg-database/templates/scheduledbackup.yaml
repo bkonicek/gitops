@@ -1,0 +1,14 @@
+{{- if .Values.scheduledBackup.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: {{ include "cnpg-database.fullname" . }}
+  labels:
+    {{- include "cnpg-database.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.scheduledBackup.schedule | quote }}
+  backupOwnerReference: {{ .Values.scheduledBackup.backupOwnerReference }}
+  method: {{ .Values.scheduledBackup.method }}
+  cluster:
+    name: {{ include "cnpg-database.fullname" . }}
+{{- end }}

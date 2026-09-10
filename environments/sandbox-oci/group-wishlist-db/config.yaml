@@ -1,0 +1,6 @@
+namespace: group-wishlist
+targetRevision: HEAD
+chartPath: charts/cnpg-database
+releaseName: "."
+
+serverSideApply: true

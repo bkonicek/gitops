@@ -1,0 +1,76 @@
+# Default values for cnpg-database.
+# Requires the CloudNativePG operator and CRDs to already be installed in the cluster
+# (see environments/*/cnpg).
+
+nameOverride: ""
+fullnameOverride: ""
+
+cluster:
+  instances: 1
+
+  # Image to use for the Postgres containers. Leave empty to let the CloudNativePG
+  # operator pick its default image from its built-in catalog.
+  imageName: ""
+
+  storage:
+    size: 8Gi
+    # storageClass: ""
+
+  # resources:
+  #   requests:
+  #     cpu: 100m
+  #     memory: 256Mi
+  #   limits:
+  #     memory: 512Mi
+
+  # Name of an existing Secret to use for the superuser/app credentials instead of
+  # letting CloudNativePG generate one automatically.
+  superuserSecret: ""
+  enableSuperuserAccess: false
+
+  bootstrap:
+    # Name of the initial database and its owner role, created by initdb.
+    database: app
+    owner: app
+
+  # Raw passthrough to Cluster.spec.postgresql (postgresql.conf tuning, pg_hba rules, etc.)
+  postgresql: {}
+
+  # Deprecated upstream in favor of manually managing a PodMonitor resource, but still
+  # the simplest built-in option and functional as of the currently installed operator version.
+  monitoring:
+    enablePodMonitor: true
+
+  # affinity: {}
+
+  # Raw passthrough to Cluster.spec.backup. Required if scheduledBackup.enabled is true.
+  # Configure barmanObjectStore here, sourcing any credentials from an existing Secret
+  # populated by an ExternalSecret at the environment level.
+  # Note: barmanObjectStore is deprecated upstream in favor of the Barman Cloud Plugin
+  # (spec.plugins) and will be removed in CloudNativePG 1.31 — migrate this chart's
+  # backup section once that plugin is installed alongside the operator.
+  # backup:
+  #   barmanObjectStore:
+  #     destinationPath: s3://bucket-name/path
+  #     endpointURL: https://s3.example.com
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: my-backup-credentials
+  #         key: ACCESS_KEY_ID
+  #       secretAccessKey:
+  #         name: my-backup-credentials
+  #         key: SECRET_ACCESS_KEY
+  #   retentionPolicy: 30d
+  backup: {}
+
+# Additional databases to provision on the cluster, beyond the initdb bootstrap database.
+# databases:
+#   - name: extra_db
+#     owner: app
+databases: []
+
+scheduledBackup:
+  enabled: false
+  schedule: "0 0 0 * * *"
+  method: barmanObjectStore
+  backupOwnerReference: self

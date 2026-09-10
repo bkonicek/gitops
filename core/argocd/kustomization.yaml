@@ -9,7 +9,6 @@ resources:
   - manifests/dex-ingress.yaml
   - manifests/service-monitors.yaml
   - manifests/externalsecret-webhook.yaml
-  - manifests/externalsecret-github-packages-app-pem.yaml
   - manifests/externalsecret-ghcr-repo-creds.yaml
   - manifests/ingress-webhook.yaml
   # - argocd.yaml

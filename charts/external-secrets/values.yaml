@@ -3,7 +3,3 @@ external-secrets:
     enabled: true
   grafanaDashboard:
     enabled: true
-
-githubPackagesApp:
-  appID: "4892207"
-  installID: "160474404"

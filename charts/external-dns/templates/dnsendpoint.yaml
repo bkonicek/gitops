@@ -16,7 +16,7 @@ spec:
     {{- end }}
     {{- if $value.proxy }}
     providerSpecific:
-      - name: external-dns.kubernetes.io/cloudflare-proxied
+      - name: cloudflare/proxied
         value: "true"
     {{- end }}
 ---

@@ -34,20 +34,7 @@ jobs:
             -e TARGET_BRANCH=refs/pull/${{ github.event.number }}/merge \
             -e REPO=${{ github.repository }} \
             -e LINE_COUNT=3 \
-            -e DEBUG=true \
-            -e KEEP_CLUSTER_ALIVE=true \
             dagandersen/argocd-diff-preview:v0.2.16
-
-      - name: Dump cluster diagnostics
-        if: failure()
-        run: |
-          kind export kubeconfig --name argocd-diff-preview
-          kubectl get pods -A -o wide || true
-          kubectl get events -A --sort-by=.lastTimestamp || true
-          kubectl -n argocd describe pods -l app.kubernetes.io/component=redis || true
-          kubectl -n argocd logs -l app.kubernetes.io/component=redis --all-containers --tail=100 || true
-          kubectl -n argocd get jobs,pods || true
-          kubectl -n argocd describe pods || true
 
       - name: Post diff as comment
         run: |

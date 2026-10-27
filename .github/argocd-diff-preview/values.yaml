@@ -1,0 +1,7 @@
+# Helm values for the Argo CD instance that argocd-diff-preview installs in CI.
+# The chart's default Redis image comes from ecr-public.aws.com, which returns
+# 429 Too Many Requests from GitHub runners. Pull from Google's Docker Hub
+# mirror instead. The tag is left to the chart default.
+redis:
+  image:
+    repository: mirror.gcr.io/library/redis

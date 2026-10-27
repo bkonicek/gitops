@@ -1,10 +1,7 @@
 # Helm values for the Argo CD instance that argocd-diff-preview installs in CI.
 # The chart's default Redis image comes from ecr-public.aws.com, which returns
-# 429 Too Many Requests from GitHub runners. Pull the official Redis image from
-# quay.io instead. quay.io/lib/redis stops at 8.2.1, so the tag is pinned
-# rather than following the chart default. This only runs in a throwaway kind
-# cluster, so the older Redis version is fine.
+# 429 Too Many Requests from GitHub runners. Pull from Google's Docker Hub
+# mirror instead. The tag is left to the chart default.
 redis:
   image:
-    repository: quay.io/lib/redis
-    tag: 8.2.1-alpine
+    repository: mirror.gcr.io/library/redis

@@ -7,5 +7,5 @@ spec:
     customResponseHeaders:
       X-Content-Type-Options: "nosniff"
       X-Frame-Options: DENY
-      Content-Security-Policy: upgrade-insecure-requests; frame-ancestors 'none';
+      Content-Security-Policy: upgrade-insecure-requests; frame-ancestors 'none'; object-src 'none'; base-uri 'self';
       Strict-Transport-Security: max-age=63072000; includeSubDomains
